@@ -23,7 +23,8 @@ section, summary, time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;}
+	vertical-align: baseline;
+}
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -3776,6 +3777,7 @@ input, select, textarea {
 
 		#main > footer {
 			text-align: center;
+            background-color: #e8e8e8;
 		}
 
 		#main > .post {
@@ -3794,6 +3796,7 @@ input, select, textarea {
 
 			#main > .post.featured {
 				text-align: center;
+				background-color: #e8e8e8;
 			}
 
 			@media screen and (max-width: 1280px) {
@@ -3839,6 +3842,7 @@ input, select, textarea {
 			text-align: center;
 			width: 100%;
 			padding: 0;
+			background-color: #e8e8e8;
 		}
 
 			#main > .posts > * {
@@ -3961,6 +3965,7 @@ input, select, textarea {
 		width: calc(100% - 4rem);
 		max-width: 72rem;
 		z-index: 2;
+        background-color: #e0e0e0;
 	}
 
 		#footer input, #footer select, #footer textarea {
