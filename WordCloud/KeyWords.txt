@@ -1,0 +1,28 @@
+SoftwareDeveloper SoftwareDeveloper 
+JAVA JAVA
+Python
+ShellScripting
+Spring
+MySQL 
+Database Database
+Git
+REST
+SOAP 
+Coding Coding 
+Programming
+Documentation
+Analysis
+ProblemSolving ProblemSolving
+Algorithms
+AWS
+MachineLearning
+Libraries Libraries
+Frameworks
+WebServices WebServices
+Operating Systems
+Computer
+Maintenance
+Technology Technology
+Competent
+MachineVision MachineVision 
+ResNet ResNet ResNet
