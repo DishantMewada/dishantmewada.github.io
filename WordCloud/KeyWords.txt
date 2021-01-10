@@ -1,8 +1,7 @@
-SoftwareDeveloper SoftwareDeveloper 
+Developer Developer
 JAVA JAVA
 Python
 ShellScripting
-Spring
 MySQL 
 Database Database
 Git
@@ -19,10 +18,16 @@ MachineLearning
 Libraries Libraries
 Frameworks
 WebServices WebServices
+Troubleshoot
 Operating Systems
 Computer
-Maintenance
-Technology Technology
 Competent
-MachineVision MachineVision 
+Machine-Vision Machine-Vision 
 ResNet ResNet ResNet
+nlp nlp
+evolution evolution
+data dataset
+games 
+AI AI 
+ML ML
+C++
