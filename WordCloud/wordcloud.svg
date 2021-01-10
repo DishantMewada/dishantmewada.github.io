@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="851" height="315">
+<defs>
+<style type="text/css"> @import url(https://fonts.googleapis.com/css2?family=Pacifico:wght@400&amp;display=swap); </style>
+</defs>
+<g>
+<g transform="translate(426,158) rotate(0,0,0)">
+<text fill="#54bfa5" stroke="none" font-family="Pacifico" font-size="34.7906px" font-style="normal" font-weight="400" x="-59" y="-14" text-anchor="start" dominant-baseline="alphabetic">ResNet</text>
+</g>
+<g transform="translate(424,180) rotate(0,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-63" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">WebServices</text>
+</g>
+<g transform="translate(426,120) rotate(0,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-77.5" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">Machine-Vision</text>
+</g>
+<g transform="translate(426,204) rotate(0,0,0)">
+<text fill="#e9c028" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-77" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">ProblemSolving</text>
+</g>
+<g transform="translate(424,242) rotate(37.46273737295481,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-43.5" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">Libraries</text>
+</g>
+<g transform="translate(420,96) rotate(0,0,0)">
+<text fill="#3da4de" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-48.05833435058594" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">Developer</text>
+</g>
+<g transform="translate(496,158) rotate(24.97162668106646,0,0)">
+<text fill="#e9c028" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-15" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">nlp</text>
+</g>
+<g transform="translate(330,152) rotate(55.96201336582909,0,0)">
+<text fill="#545006" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-32.38333511352539" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">Coding</text>
+</g>
+<g transform="translate(424,72) rotate(0,0,0)">
+<text fill="#3da4de" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-35.5" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">JAVA</text>
+</g>
+<g transform="translate(520,156) rotate(54.129530339739524,0,0)">
+<text fill="#545006" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-42" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">evolution</text>
+</g>
+<g transform="translate(474,228) rotate(0,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="23.1938px" font-style="normal" font-weight="400" x="-45.266666412353516" y="-9.277506000000002" text-anchor="start" dominant-baseline="alphabetic">Database</text>
+</g>
+<g transform="translate(426,266) rotate(0,0,0)">
+<text fill="#e9c028" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-25.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Operating</text>
+</g>
+<g transform="translate(394,250) rotate(0,0,0)">
+<text fill="#3da4de" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-32.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Troubleshoot</text>
+</g>
+<g transform="translate(486,166) rotate(64.13432953862952,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-15.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">games</text>
+</g>
+<g transform="translate(380,216) rotate(73.41647435557071,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-18.941667556762695" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">dataset</text>
+</g>
+<g transform="translate(444,160) rotate(10.891784716559837,0,0)">
+<text fill="#222" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-11.441666603088379" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">data</text>
+</g>
+<g transform="translate(308,158) rotate(0,0,0)">
+<text fill="#4c0e27" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-26.941667556762695" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Competent</text>
+</g>
+<g transform="translate(470,238) rotate(0,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-25" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Computer</text>
+</g>
+<g transform="translate(508,178) rotate(81.59532426466482,0,0)">
+<text fill="#d6125c" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-21" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Systems</text>
+</g>
+<g transform="translate(324,174) rotate(0,0,0)">
+<text fill="#d6125c" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-16" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">AWS</text>
+</g>
+<g transform="translate(358,134) rotate(0,0,0)">
+<text fill="#d6125c" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-9" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Git</text>
+</g>
+<g transform="translate(358,218) rotate(0,0,0)">
+<text fill="#54bfa5" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-17.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">REST</text>
+</g>
+<g transform="translate(496,94) rotate(0,0,0)">
+<text fill="#3da4de" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-23.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">MySQL</text>
+</g>
+<g transform="translate(312,190) rotate(0,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-36" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">ShellScripting</text>
+</g>
+<g transform="translate(332,114) rotate(0,0,0)">
+<text fill="#e9c028" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-18.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Python</text>
+</g>
+<g transform="translate(480,78) rotate(0,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-18.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">SOAP</text>
+</g>
+<g transform="translate(350,230) rotate(0,0,0)">
+<text fill="#545006" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-34" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Programming</text>
+</g>
+<g transform="translate(342,90) rotate(0,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-28.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Algorithms</text>
+</g>
+<g transform="translate(302,142) rotate(0,0,0)">
+<text fill="#3da4de" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-21.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Analysis</text>
+</g>
+<g transform="translate(574,170) rotate(-76.11095568862699,0,0)">
+<text fill="#54bfa5" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-37.5" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Documentation</text>
+</g>
+<g transform="translate(536,114) rotate(0,0,0)">
+<text fill="#38b3f6" stroke="none" font-family="Pacifico" font-size="11.5969px" font-style="normal" font-weight="400" x="-31.524999618530273" y="-4.800000000000001" text-anchor="start" dominant-baseline="alphabetic">Frameworks</text>
+</g>
+</g>
+</svg>
