@@ -63,9 +63,12 @@ a:hover {
 }
 
 .brand {
+	border-radius: 999px;
 	color: var(--ink);
 	font-weight: 750;
 	letter-spacing: 0.02em;
+	padding: 0.28rem 0.55rem;
+	transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .nav-links {
@@ -76,9 +79,45 @@ a:hover {
 }
 
 .nav-links a {
+	align-items: center;
+	border: 1px solid transparent;
+	border-radius: 999px;
 	color: var(--muted);
+	display: inline-flex;
 	font-size: 0.95rem;
 	font-weight: 650;
+	min-height: 2.2rem;
+	padding: 0.34rem 0.78rem;
+	position: relative;
+	transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.brand.is-active,
+.nav-links a.is-active {
+	background:
+		linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(238, 247, 244, 0.64)),
+		rgba(232, 241, 247, 0.52);
+	box-shadow:
+		0 10px 28px rgba(47, 117, 109, 0.14),
+		inset 0 1px 0 rgba(255, 255, 255, 0.72);
+	color: var(--teal);
+}
+
+.nav-links a.is-active {
+	border-color: rgba(127, 168, 152, 0.42);
+}
+
+.nav-links a.is-active::after {
+	background: var(--coral);
+	border-radius: 999px;
+	bottom: 0.18rem;
+	box-shadow: 0 0 12px rgba(207, 130, 109, 0.44);
+	content: "";
+	height: 0.2rem;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+	width: 1.1rem;
 }
 
 .hero,
@@ -399,14 +438,16 @@ h3 {
 	align-items: center;
 	backdrop-filter: blur(18px) saturate(150%);
 	background:
-		linear-gradient(135deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.34)),
-		rgba(251, 253, 251, 0.44);
-	border: 1px solid rgba(255, 255, 255, 0.58);
+		radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0) 34%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.28)),
+		rgba(251, 253, 251, 0.46);
+	border: 1px solid rgba(255, 255, 255, 0.68);
 	border-radius: 999px;
 	box-shadow:
-		0 18px 48px rgba(17, 37, 33, 0.18),
-		inset 0 1px 0 rgba(255, 255, 255, 0.65),
-		inset 0 -10px 28px rgba(127, 168, 152, 0.08);
+		0 22px 60px rgba(17, 37, 33, 0.2),
+		0 0 0 1px rgba(127, 168, 152, 0.08),
+		inset 0 1px 0 rgba(255, 255, 255, 0.76),
+		inset 0 -12px 30px rgba(127, 168, 152, 0.1);
 	color: var(--ink);
 	cursor: pointer;
 	display: inline-flex;
@@ -420,6 +461,7 @@ h3 {
 	pointer-events: auto;
 	position: fixed;
 	overflow: hidden;
+	isolation: isolate;
 	touch-action: manipulation;
 	transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.2s ease;
 	z-index: 40;
@@ -435,17 +477,31 @@ h3 {
 	transform: rotate(18deg);
 	transition: left 0.35s ease;
 	width: 60%;
+	z-index: 1;
+}
+
+.direction-button::after {
+	border: 1px solid rgba(255, 255, 255, 0.46);
+	border-radius: inherit;
+	content: "";
+	inset: 0.28rem;
+	opacity: 0.72;
+	pointer-events: none;
+	position: absolute;
+	z-index: 0;
 }
 
 .direction-button:hover,
 .direction-button:focus-visible {
 	background:
-		linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.46)),
-		rgba(251, 253, 251, 0.62);
+		radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0) 36%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.42)),
+		rgba(251, 253, 251, 0.66);
 	box-shadow:
-		0 22px 58px rgba(17, 37, 33, 0.22),
-		inset 0 1px 0 rgba(255, 255, 255, 0.72),
-		inset 0 -10px 28px rgba(127, 168, 152, 0.12);
+		0 26px 68px rgba(17, 37, 33, 0.26),
+		0 0 0 1px rgba(207, 130, 109, 0.16),
+		inset 0 1px 0 rgba(255, 255, 255, 0.82),
+		inset 0 -12px 30px rgba(127, 168, 152, 0.15);
 	color: var(--teal);
 	transform: translateY(-1px);
 }
@@ -465,14 +521,30 @@ h3 {
 }
 
 .arrow-symbol {
+	align-items: center;
+	background:
+		radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0) 42%),
+		linear-gradient(135deg, rgba(127, 168, 152, 0.26), rgba(47, 117, 109, 0.14));
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	border-radius: 50%;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.8),
+		0 8px 18px rgba(47, 117, 109, 0.14);
+	color: var(--teal);
+	display: inline-flex;
 	font-size: 1.15rem;
+	height: 1.6rem;
+	justify-content: center;
 	line-height: 1;
 	position: relative;
+	width: 1.6rem;
+	z-index: 2;
 }
 
 .arrow-label {
 	position: relative;
 	white-space: nowrap;
+	z-index: 2;
 }
 
 .direction-button-up {

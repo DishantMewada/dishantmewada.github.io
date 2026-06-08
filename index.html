@@ -122,6 +122,7 @@
 			}));
 			const controls = Array.from(document.querySelectorAll('.direction-button'));
 			const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
+			const navLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
 			const previousDirections = new Set(['up', 'left']);
 			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const transitionDuration = reducedMotion ? 0 : 680;
@@ -155,11 +156,27 @@
 				currentIndex = index;
 				pages[currentIndex].element.classList.add('page-active');
 				updateControls();
+				updateNavState();
 
 				if (updateUrl) {
 					const hash = pages[currentIndex].id === 'top' ? window.location.pathname : `#${pages[currentIndex].id}`;
 					window.history.replaceState(null, '', hash);
 				}
+			};
+
+			const updateNavState = () => {
+				const currentHash = `#${pages[currentIndex].id}`;
+
+				navLinks.forEach((link) => {
+					const isActive = link.getAttribute('href') === currentHash;
+					link.classList.toggle('is-active', isActive);
+
+					if (isActive) {
+						link.setAttribute('aria-current', 'page');
+					} else {
+						link.removeAttribute('aria-current');
+					}
+				});
 			};
 
 			const updateControls = () => {
@@ -230,6 +247,7 @@
 					currentIndex = targetIndex;
 					isNavigating = false;
 					updateControls();
+					updateNavState();
 					const hash = targetPage.id === 'top' ? window.location.pathname : `#${targetPage.id}`;
 					window.history.replaceState(null, '', hash);
 				}, transitionDuration);
