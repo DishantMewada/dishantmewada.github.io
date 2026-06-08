@@ -17,7 +17,7 @@
 		</div>
 	</nav>
 
-	<header class="hero" id="top">
+	<header class="hero" id="top" data-page-name="Home">
 		<div class="hero-content">
 			<p class="eyebrow">Problem Solver</p>
 			<h1>Dishant Mewada</h1>
@@ -30,7 +30,7 @@
 	</header>
 
 	<main>
-		<section class="section about-section" id="about">
+		<section class="section about-section" id="about" data-page-name="About">
 			<div class="section-inner about-grid">
 				<div>
 					<p class="section-kicker">About</p>
@@ -51,7 +51,7 @@
 			</div>
 		</section>
 
-		<section class="section projects-section" id="projects">
+		<section class="section projects-section" id="projects" data-page-name="Projects">
 			<div class="section-inner">
 				<div class="section-heading">
 					<p class="section-kicker">Selected Work</p>
@@ -73,7 +73,7 @@
 			</div>
 		</section>
 
-		<section class="section contact-section" id="contact">
+		<section class="section contact-section" id="contact" data-page-name="Contact">
 			<div class="section-inner contact-grid">
 				<div>
 					<p class="section-kicker">Contact</p>
@@ -94,5 +94,162 @@
 	<footer class="site-footer">
 		<p>&copy; Dishant Mewada</p>
 	</footer>
+
+	<div class="direction-nav" aria-label="Directional page navigation">
+		<button class="direction-button direction-button-up" type="button" data-direction="up">
+			<span class="arrow-symbol" aria-hidden="true">&uarr;</span>
+			<span class="arrow-label">Home</span>
+		</button>
+		<button class="direction-button direction-button-right" type="button" data-direction="right">
+			<span class="arrow-symbol" aria-hidden="true">&rarr;</span>
+			<span class="arrow-label">About</span>
+		</button>
+		<button class="direction-button direction-button-down" type="button" data-direction="down">
+			<span class="arrow-symbol" aria-hidden="true">&darr;</span>
+			<span class="arrow-label">About</span>
+		</button>
+		<button class="direction-button direction-button-left" type="button" data-direction="left">
+			<span class="arrow-symbol" aria-hidden="true">&larr;</span>
+			<span class="arrow-label">Home</span>
+		</button>
+	</div>
+
+	<script>
+		(() => {
+			const pages = Array.from(document.querySelectorAll('[data-page-name]')).map((element) => ({
+				element,
+				name: element.dataset.pageName
+			}));
+			const controls = Array.from(document.querySelectorAll('.direction-button'));
+			const previousDirections = new Set(['up', 'left']);
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			let currentIndex = 0;
+			let pointerStart = null;
+			let isNavigating = false;
+
+			const destinationIndex = (direction) => currentIndex + (previousDirections.has(direction) ? -1 : 1);
+
+			const updateCurrentPage = () => {
+				const viewportMarker = window.scrollY + (window.innerHeight * 0.42);
+				let closestIndex = 0;
+
+				pages.forEach((page, index) => {
+					if (page.element.offsetTop <= viewportMarker) {
+						closestIndex = index;
+					}
+				});
+
+				currentIndex = closestIndex;
+				updateControls();
+			};
+
+			const updateControls = () => {
+				controls.forEach((button) => {
+					const direction = button.dataset.direction;
+					const targetIndex = destinationIndex(direction);
+					const targetPage = pages[targetIndex];
+
+					if (!targetPage) {
+						button.hidden = true;
+						return;
+					}
+
+					button.hidden = false;
+					button.querySelector('.arrow-label').textContent = targetPage.name;
+					button.setAttribute('aria-label', `Go to ${targetPage.name}`);
+				});
+			};
+
+			const goTo = (direction) => {
+				const targetPage = pages[destinationIndex(direction)];
+
+				if (!targetPage || isNavigating) {
+					return;
+				}
+
+				isNavigating = true;
+				targetPage.element.scrollIntoView({
+					behavior: reducedMotion ? 'auto' : 'smooth',
+					block: 'start'
+				});
+
+				window.setTimeout(() => {
+					isNavigating = false;
+					updateCurrentPage();
+				}, reducedMotion ? 0 : 650);
+			};
+
+			controls.forEach((button) => {
+				button.addEventListener('click', () => goTo(button.dataset.direction));
+			});
+
+			document.addEventListener('keydown', (event) => {
+				if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) {
+					return;
+				}
+
+				const directionByKey = {
+					ArrowUp: 'up',
+					ArrowDown: 'down',
+					ArrowLeft: 'left',
+					ArrowRight: 'right'
+				};
+				const direction = directionByKey[event.key];
+
+				if (direction) {
+					event.preventDefault();
+					goTo(direction);
+				}
+			});
+
+			document.addEventListener('pointerdown', (event) => {
+				if (event.button && event.button !== 0) {
+					return;
+				}
+
+				pointerStart = {
+					x: event.clientX,
+					y: event.clientY
+				};
+			}, { passive: true });
+
+			document.addEventListener('pointerup', (event) => {
+				if (!pointerStart) {
+					return;
+				}
+
+				const deltaX = event.clientX - pointerStart.x;
+				const deltaY = event.clientY - pointerStart.y;
+				const absX = Math.abs(deltaX);
+				const absY = Math.abs(deltaY);
+				pointerStart = null;
+
+				if (Math.max(absX, absY) < 64) {
+					return;
+				}
+
+				if (absX > absY) {
+					goTo(deltaX < 0 ? 'right' : 'left');
+				} else {
+					goTo(deltaY < 0 ? 'down' : 'up');
+				}
+			}, { passive: true });
+
+			let scrollFrame = null;
+			window.addEventListener('scroll', () => {
+				if (scrollFrame) {
+					return;
+				}
+
+				scrollFrame = window.requestAnimationFrame(() => {
+					scrollFrame = null;
+					updateCurrentPage();
+				});
+			}, { passive: true });
+
+			window.addEventListener('resize', updateCurrentPage);
+			updateCurrentPage();
+		})();
+	</script>
 </body>
 </html>
