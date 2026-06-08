@@ -4,7 +4,7 @@
 	<title>Dishant Mewada - Portfolio</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="description" content="Portfolio of Dishant Mewada, a software developer building practical projects with Python, Java, cloud, machine learning, and web technologies." />
+	<meta name="description" content="Portfolio of Dishant Mewada, a problem solver building practical projects with Python, cloud, machine learning, and web technologies." />
 	<link rel="stylesheet" href="assets/css/main.css" />
 </head>
 <body>
@@ -17,7 +17,7 @@
 		</div>
 	</nav>
 
-	<header class="hero" id="top" data-page-name="Home">
+	<header class="hero page-active" id="top" data-page-name="Home">
 		<div class="hero-content">
 			<p class="eyebrow">Problem Solver</p>
 			<h1>Dishant Mewada</h1>
@@ -41,7 +41,6 @@
 					<p>I care about readable code, clean user experiences, and choosing the right amount of technology for the job.</p>
 					<ul class="skill-list" aria-label="Core skills">
 						<li>Python</li>
-						<li>Java</li>
 						<li>Machine Learning</li>
 						<li>AWS</li>
 						<li>REST APIs</li>
@@ -118,29 +117,49 @@
 		(() => {
 			const pages = Array.from(document.querySelectorAll('[data-page-name]')).map((element) => ({
 				element,
+				id: element.id,
 				name: element.dataset.pageName
 			}));
 			const controls = Array.from(document.querySelectorAll('.direction-button'));
+			const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 			const previousDirections = new Set(['up', 'left']);
 			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			let currentIndex = 0;
+			const transitionDuration = reducedMotion ? 0 : 680;
+			let currentIndex = Math.max(0, pages.findIndex((page) => `#${page.id}` === window.location.hash));
 			let pointerStart = null;
 			let isNavigating = false;
 
 			const destinationIndex = (direction) => currentIndex + (previousDirections.has(direction) ? -1 : 1);
 
-			const updateCurrentPage = () => {
-				const viewportMarker = window.scrollY + (window.innerHeight * 0.42);
-				let closestIndex = 0;
+			const slideVector = (direction) => {
+				const vectors = {
+					up: { x: 0, y: -112, rotate: -1.5 },
+					right: { x: 112, y: 0, rotate: 2.5 },
+					down: { x: 0, y: 112, rotate: 1.5 },
+					left: { x: -112, y: 0, rotate: -2.5 }
+				};
 
-				pages.forEach((page, index) => {
-					if (page.element.offsetTop <= viewportMarker) {
-						closestIndex = index;
-					}
-				});
+				return vectors[direction] || vectors.right;
+			};
 
-				currentIndex = closestIndex;
+			const clearSlideStyles = (page) => {
+				page.element.classList.remove('page-active', 'page-entering', 'page-exit', 'page-dragging');
+				page.element.style.removeProperty('--slide-x');
+				page.element.style.removeProperty('--slide-y');
+				page.element.style.removeProperty('--slide-rotate');
+				page.element.style.removeProperty('--slide-scale');
+			};
+
+			const setActivePage = (index, updateUrl = true) => {
+				pages.forEach(clearSlideStyles);
+				currentIndex = index;
+				pages[currentIndex].element.classList.add('page-active');
 				updateControls();
+
+				if (updateUrl) {
+					const hash = pages[currentIndex].id === 'top' ? window.location.pathname : `#${pages[currentIndex].id}`;
+					window.history.replaceState(null, '', hash);
+				}
 			};
 
 			const updateControls = () => {
@@ -160,27 +179,82 @@
 				});
 			};
 
-			const goTo = (direction) => {
-				const targetPage = pages[destinationIndex(direction)];
+			const goToIndex = (targetIndex, direction) => {
+				const currentPage = pages[currentIndex];
+				const targetPage = pages[targetIndex];
+				const vector = slideVector(direction);
 
-				if (!targetPage || isNavigating) {
+				if (!targetPage || !currentPage || targetIndex === currentIndex || isNavigating) {
 					return;
 				}
 
 				isNavigating = true;
-				targetPage.element.scrollIntoView({
-					behavior: reducedMotion ? 'auto' : 'smooth',
-					block: 'start'
+				currentPage.element.classList.remove('page-dragging');
+				currentPage.element.style.removeProperty('--slide-x');
+				currentPage.element.style.removeProperty('--slide-y');
+				currentPage.element.style.removeProperty('--slide-rotate');
+				currentPage.element.style.removeProperty('--slide-scale');
+
+				if (reducedMotion) {
+					setActivePage(targetIndex);
+					isNavigating = false;
+					return;
+				}
+
+				targetPage.element.classList.add('page-entering');
+				targetPage.element.style.setProperty('--slide-x', `${vector.x}vw`);
+				targetPage.element.style.setProperty('--slide-y', `${vector.y}vh`);
+				targetPage.element.style.setProperty('--slide-rotate', `${vector.rotate}deg`);
+				targetPage.element.style.setProperty('--slide-scale', '0.965');
+
+				window.requestAnimationFrame(() => {
+					currentPage.element.classList.remove('page-active');
+					currentPage.element.classList.add('page-exit');
+					currentPage.element.style.setProperty('--slide-x', `${vector.x * -0.62}vw`);
+					currentPage.element.style.setProperty('--slide-y', `${vector.y * -0.62}vh`);
+					currentPage.element.style.setProperty('--slide-rotate', `${vector.rotate * -1.35}deg`);
+					currentPage.element.style.setProperty('--slide-scale', '0.96');
+
+					targetPage.element.classList.remove('page-entering');
+					targetPage.element.classList.add('page-active');
+					targetPage.element.style.setProperty('--slide-x', '0vw');
+					targetPage.element.style.setProperty('--slide-y', '0vh');
+					targetPage.element.style.setProperty('--slide-rotate', '0deg');
+					targetPage.element.style.setProperty('--slide-scale', '1');
 				});
 
 				window.setTimeout(() => {
+					clearSlideStyles(currentPage);
+					clearSlideStyles(targetPage);
+					targetPage.element.classList.add('page-active');
+					currentIndex = targetIndex;
 					isNavigating = false;
-					updateCurrentPage();
-				}, reducedMotion ? 0 : 650);
+					updateControls();
+					const hash = targetPage.id === 'top' ? window.location.pathname : `#${targetPage.id}`;
+					window.history.replaceState(null, '', hash);
+				}, transitionDuration);
+			};
+
+			const goTo = (direction) => {
+				goToIndex(destinationIndex(direction), direction);
 			};
 
 			controls.forEach((button) => {
 				button.addEventListener('click', () => goTo(button.dataset.direction));
+			});
+
+			anchorLinks.forEach((link) => {
+				link.addEventListener('click', (event) => {
+					const targetId = link.getAttribute('href').slice(1);
+					const targetIndex = pages.findIndex((page) => page.id === targetId);
+
+					if (targetIndex === -1) {
+						return;
+					}
+
+					event.preventDefault();
+					goToIndex(targetIndex, targetIndex > currentIndex ? 'right' : 'left');
+				});
 			});
 
 			document.addEventListener('keydown', (event) => {
@@ -203,14 +277,36 @@
 			});
 
 			document.addEventListener('pointerdown', (event) => {
-				if (event.button && event.button !== 0) {
+				if ((event.button && event.button !== 0) || event.target.closest('a, button')) {
 					return;
 				}
 
 				pointerStart = {
 					x: event.clientX,
-					y: event.clientY
+					y: event.clientY,
+					dragging: false
 				};
+			}, { passive: true });
+
+			document.addEventListener('pointermove', (event) => {
+				if (!pointerStart || isNavigating) {
+					return;
+				}
+
+				const deltaX = event.clientX - pointerStart.x;
+				const deltaY = event.clientY - pointerStart.y;
+				const activePage = pages[currentIndex].element;
+
+				if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 10) {
+					return;
+				}
+
+				pointerStart.dragging = true;
+				activePage.classList.add('page-dragging');
+				activePage.style.setProperty('--slide-x', `${deltaX * 0.2}px`);
+				activePage.style.setProperty('--slide-y', `${deltaY * 0.2}px`);
+				activePage.style.setProperty('--slide-rotate', `${Math.max(-4, Math.min(4, deltaX * 0.012))}deg`);
+				activePage.style.setProperty('--slide-scale', '0.988');
 			}, { passive: true });
 
 			document.addEventListener('pointerup', (event) => {
@@ -218,11 +314,18 @@
 					return;
 				}
 
+				const activePage = pages[currentIndex].element;
 				const deltaX = event.clientX - pointerStart.x;
 				const deltaY = event.clientY - pointerStart.y;
 				const absX = Math.abs(deltaX);
 				const absY = Math.abs(deltaY);
 				pointerStart = null;
+
+				activePage.classList.remove('page-dragging');
+				activePage.style.removeProperty('--slide-x');
+				activePage.style.removeProperty('--slide-y');
+				activePage.style.removeProperty('--slide-rotate');
+				activePage.style.removeProperty('--slide-scale');
 
 				if (Math.max(absX, absY) < 64) {
 					return;
@@ -235,20 +338,26 @@
 				}
 			}, { passive: true });
 
-			let scrollFrame = null;
-			window.addEventListener('scroll', () => {
-				if (scrollFrame) {
+			document.addEventListener('pointercancel', () => {
+				if (!pointerStart) {
 					return;
 				}
 
-				scrollFrame = window.requestAnimationFrame(() => {
-					scrollFrame = null;
-					updateCurrentPage();
-				});
+				const activePage = pages[currentIndex].element;
+				pointerStart = null;
+				activePage.classList.remove('page-dragging');
+				activePage.style.removeProperty('--slide-x');
+				activePage.style.removeProperty('--slide-y');
+				activePage.style.removeProperty('--slide-rotate');
+				activePage.style.removeProperty('--slide-scale');
 			}, { passive: true });
 
-			window.addEventListener('resize', updateCurrentPage);
-			updateCurrentPage();
+			window.addEventListener('popstate', () => {
+				const targetIndex = Math.max(0, pages.findIndex((page) => `#${page.id}` === window.location.hash));
+				setActivePage(targetIndex, false);
+			});
+
+			setActivePage(currentIndex, false);
 		})();
 	</script>
 </body>
