@@ -440,24 +440,24 @@ h3 {
 	--edge-glow-y: 50%;
 	--edge-shift-x: 0;
 	--edge-shift-y: 0;
-	--edge-tint-a: rgba(255, 255, 255, 0.42);
-	--edge-tint-b: rgba(127, 168, 152, 0.18);
-	--edge-shadow: rgba(17, 37, 33, 0.16);
+	--edge-tint-a: rgba(255, 255, 255, 0.32);
+	--edge-tint-b: rgba(127, 168, 152, 0.12);
+	--edge-shadow: rgba(17, 37, 33, 0.12);
 	align-items: center;
 	backdrop-filter: blur(22px) saturate(170%);
 	background:
-		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0) 38%),
+		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0) 38%),
 		linear-gradient(var(--edge-angle), var(--edge-tint-a), var(--edge-tint-b)),
-		rgba(251, 253, 251, 0.16);
-	border: 1px solid rgba(255, 255, 255, 0.34);
+		rgba(251, 253, 251, 0.09);
+	border: 1px solid rgba(255, 255, 255, 0.26);
 	border-radius: 999px;
 	box-shadow:
 		0 22px 64px var(--edge-shadow),
-		0 0 52px rgba(127, 168, 152, 0.18),
-		inset 0 1px 0 rgba(255, 255, 255, 0.54),
-		inset 0 -18px 42px rgba(47, 117, 109, 0.08),
-		inset 0 0 34px rgba(255, 255, 255, 0.16);
-	color: rgba(32, 51, 47, 0.82);
+		0 0 52px rgba(127, 168, 152, 0.12),
+		inset 0 1px 0 rgba(255, 255, 255, 0.42),
+		inset 0 -18px 42px rgba(47, 117, 109, 0.06),
+		inset 0 0 34px rgba(255, 255, 255, 0.1);
+	color: rgba(32, 51, 47, 0.78);
 	cursor: pointer;
 	display: inline-flex;
 	font: inherit;
@@ -466,7 +466,7 @@ h3 {
 	gap: 0.5rem;
 	letter-spacing: 0.06em;
 	min-height: 3rem;
-	opacity: 0.78;
+	opacity: 0.68;
 	padding: 0.62rem 1.05rem;
 	pointer-events: auto;
 	position: fixed;
@@ -481,12 +481,12 @@ h3 {
 
 .direction-button::before {
 	background:
-		radial-gradient(ellipse at center, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0) 62%),
-		radial-gradient(ellipse at center, rgba(127, 168, 152, 0.28), rgba(127, 168, 152, 0) 72%);
+		radial-gradient(ellipse at center, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 62%),
+		radial-gradient(ellipse at center, rgba(127, 168, 152, 0.2), rgba(127, 168, 152, 0) 72%);
 	content: "";
 	filter: blur(11px);
 	inset: -1.1rem;
-	opacity: 0.62;
+	opacity: 0.5;
 	pointer-events: none;
 	position: absolute;
 	transform: translate3d(var(--edge-shift-x), var(--edge-shift-y), 0);
@@ -496,12 +496,12 @@ h3 {
 
 .direction-button::after {
 	background:
-		linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.52) 48%, transparent 78%),
-		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0));
+		linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.4) 48%, transparent 78%),
+		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
 	border-radius: inherit;
 	content: "";
 	inset: 0.12rem;
-	opacity: 0.38;
+	opacity: 0.3;
 	pointer-events: none;
 	position: absolute;
 	transform: translateX(-36%);
@@ -512,30 +512,30 @@ h3 {
 .direction-button:hover,
 .direction-button:focus-visible {
 	background:
-		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0) 42%),
-		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.54), rgba(207, 130, 109, 0.14) 46%, rgba(47, 117, 109, 0.2)),
-		rgba(251, 253, 251, 0.22);
-	border-color: rgba(255, 255, 255, 0.52);
+		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0) 42%),
+		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.4), rgba(207, 130, 109, 0.1) 46%, rgba(47, 117, 109, 0.14)),
+		rgba(251, 253, 251, 0.14);
+	border-color: rgba(255, 255, 255, 0.4);
 	box-shadow:
 		0 26px 76px rgba(17, 37, 33, 0.22),
-		0 0 70px rgba(207, 130, 109, 0.22),
-		0 0 44px rgba(127, 168, 152, 0.22),
-		inset 0 1px 0 rgba(255, 255, 255, 0.72),
-		inset 0 -18px 42px rgba(47, 117, 109, 0.12);
+		0 0 70px rgba(207, 130, 109, 0.16),
+		0 0 44px rgba(127, 168, 152, 0.16),
+		inset 0 1px 0 rgba(255, 255, 255, 0.58),
+		inset 0 -18px 42px rgba(47, 117, 109, 0.09);
 	color: var(--teal);
-	opacity: 1;
+	opacity: 0.92;
 	transform: translate3d(0, -1px, 0);
 }
 
 .direction-button:hover::before,
 .direction-button:focus-visible::before {
-	opacity: 0.94;
+	opacity: 0.78;
 	transform: translate3d(calc(var(--edge-shift-x) * 1.4), calc(var(--edge-shift-y) * 1.4), 0) scale(1.08);
 }
 
 .direction-button:hover::after,
 .direction-button:focus-visible::after {
-	opacity: 0.72;
+	opacity: 0.56;
 	transform: translateX(28%);
 }
 
@@ -551,14 +551,14 @@ h3 {
 .arrow-symbol {
 	align-items: center;
 	background:
-		radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 42%),
-		linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(47, 117, 109, 0.1));
-	border: 1px solid rgba(255, 255, 255, 0.38);
+		radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0) 42%),
+		linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(47, 117, 109, 0.07));
+	border: 1px solid rgba(255, 255, 255, 0.26);
 	border-radius: 50%;
 	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.52),
-		inset 0 -8px 16px rgba(47, 117, 109, 0.08),
-		0 9px 24px rgba(47, 117, 109, 0.12);
+		inset 0 1px 0 rgba(255, 255, 255, 0.38),
+		inset 0 -8px 16px rgba(47, 117, 109, 0.06),
+		0 9px 24px rgba(47, 117, 109, 0.09);
 	color: var(--teal);
 	display: inline-flex;
 	font-size: 1.05rem;
