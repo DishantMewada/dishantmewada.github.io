@@ -652,15 +652,37 @@ h3 {
 	.site-nav {
 		align-items: flex-start;
 		flex-direction: column;
+		gap: 0.32rem;
+		padding: 0.5rem 0.85rem;
+	}
+
+	.brand {
+		font-size: 0.92rem;
+		line-height: 1.15;
+		padding: 0.14rem 0.38rem;
 	}
 
 	.nav-links {
+		gap: 0.2rem 0.38rem;
 		justify-content: flex-start;
+	}
+
+	.nav-links a {
+		font-size: 0.78rem;
+		line-height: 1.1;
+		min-height: 1.72rem;
+		padding: 0.18rem 0.5rem;
+	}
+
+	.nav-links a.is-active::after {
+		bottom: 0.08rem;
+		height: 0.12rem;
+		width: 0.78rem;
 	}
 
 	.hero {
 		min-height: 100dvh;
-		padding-top: 7.4rem;
+		padding-top: 5.9rem;
 	}
 
 	.hero-copy {
@@ -669,7 +691,7 @@ h3 {
 
 	.section {
 		padding-bottom: 2.35rem;
-		padding-top: 7.2rem;
+		padding-top: 5.8rem;
 	}
 
 	h1 {
@@ -709,7 +731,7 @@ h3 {
 	}
 
 	.direction-button-up {
-		top: 6.65rem;
+		top: 5.35rem;
 	}
 
 	.direction-button-left {
