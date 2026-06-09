@@ -647,6 +647,12 @@ h3 {
 		padding-top: 5.9rem;
 	}
 
+	.hero,
+	.section {
+		padding-left: 3.55rem;
+		padding-right: 3.55rem;
+	}
+
 	.hero-copy {
 		font-size: 1rem;
 	}
