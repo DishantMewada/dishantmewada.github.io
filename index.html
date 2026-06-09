@@ -129,6 +129,14 @@
 
 			const destinationIndex = (direction) => currentIndex + (previousDirections.has(direction) ? -1 : 1);
 
+			const formatEdgeLabel = (name, direction) => {
+				if (direction === 'left' || direction === 'right') {
+					return name.replace(/\s+/g, '').split('').join('\n');
+				}
+
+				return name;
+			};
+
 			const slideVector = (direction) => {
 				const vectors = {
 					up: { x: 0, y: -112, rotate: -1.5 },
@@ -195,7 +203,7 @@
 					zone.classList.remove('is-disabled');
 					zone.removeAttribute('aria-hidden');
 					zone.tabIndex = 0;
-					label.textContent = targetPage.name;
+					label.textContent = formatEdgeLabel(targetPage.name, direction);
 					zone.setAttribute('aria-label', `Go to ${targetPage.name}`);
 				});
 			};

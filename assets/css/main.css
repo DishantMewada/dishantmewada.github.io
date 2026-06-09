@@ -554,7 +554,10 @@ h3 {
 }
 
 .edge-zone-right .edge-label {
-	writing-mode: vertical-rl;
+	letter-spacing: 0;
+	line-height: 0.96;
+	text-align: center;
+	white-space: pre-line;
 }
 
 .edge-zone-down {
@@ -590,8 +593,10 @@ h3 {
 }
 
 .edge-zone-left .edge-label {
-	transform: rotate(180deg);
-	writing-mode: vertical-rl;
+	letter-spacing: 0;
+	line-height: 0.96;
+	text-align: center;
+	white-space: pre-line;
 }
 
 @media (max-width: 920px) {
