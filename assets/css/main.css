@@ -431,6 +431,7 @@ h3 {
 .edge-navigation {
 	--edge-side-size: clamp(3.1rem, 7vw, 5.25rem);
 	--edge-block-size: clamp(5.4rem, 12vh, 7.4rem);
+	--edge-top-size: clamp(6.25rem, 13vh, 7.8rem);
 	inset: 0;
 	pointer-events: none;
 	position: fixed;
@@ -522,7 +523,7 @@ h3 {
 }
 
 .edge-zone-up {
-	height: var(--edge-block-size);
+	height: var(--edge-top-size);
 	left: 0;
 	padding-top: clamp(4.75rem, 8.8vh, 5.95rem);
 	right: 0;
@@ -555,7 +556,7 @@ h3 {
 
 .edge-zone-right .edge-label {
 	letter-spacing: 0;
-	line-height: 0.96;
+	line-height: 1.18;
 	text-align: center;
 	white-space: pre-line;
 }
@@ -594,7 +595,7 @@ h3 {
 
 .edge-zone-left .edge-label {
 	letter-spacing: 0;
-	line-height: 0.96;
+	line-height: 1.18;
 	text-align: center;
 	white-space: pre-line;
 }
@@ -718,6 +719,7 @@ h3 {
 	.edge-navigation {
 		--edge-side-size: 2.65rem;
 		--edge-block-size: 5.35rem;
+		--edge-top-size: 6.35rem;
 	}
 
 	.edge-zone {
@@ -727,6 +729,11 @@ h3 {
 
 	.edge-zone-up {
 		padding-top: 4.75rem;
+	}
+
+	.edge-zone-left .edge-label,
+	.edge-zone-right .edge-label {
+		line-height: 1.22;
 	}
 
 	.edge-zone-down {
