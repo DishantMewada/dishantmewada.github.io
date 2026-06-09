@@ -293,7 +293,7 @@ h3 {
 }
 
 .about-section {
-	background: linear-gradient(135deg, var(--mist), #f8fbf8 58%, var(--soft-blue));
+	background: linear-gradient(135deg, #d6e1da 0%, #e2e7df 52%, #ccd8df 100%);
 }
 
 .about-grid,
