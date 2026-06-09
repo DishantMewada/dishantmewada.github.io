@@ -432,6 +432,8 @@ h3 {
 	--edge-side-size: clamp(3.1rem, 7vw, 5.25rem);
 	--edge-block-size: clamp(5.4rem, 12vh, 7.4rem);
 	--edge-top-size: clamp(6.25rem, 13vh, 7.8rem);
+	--edge-label-color: rgba(207, 244, 222, 0.88);
+	--edge-label-active: #e7fff1;
 	inset: 0;
 	pointer-events: none;
 	position: fixed;
@@ -440,7 +442,7 @@ h3 {
 
 .edge-zone {
 	align-items: center;
-	color: rgba(255, 255, 255, 0.78);
+	color: var(--edge-label-color);
 	cursor: pointer;
 	display: flex;
 	font-size: 0.72rem;
@@ -516,10 +518,10 @@ h3 {
 .edge-zone:hover .edge-label,
 .edge-zone:focus-visible .edge-label,
 .edge-zone:active .edge-label {
-	color: #ffffff;
+	color: var(--edge-label-active);
 	text-shadow:
 		0 1px 12px rgba(0, 0, 0, 0.86),
-		0 0 24px rgba(255, 255, 255, 0.28);
+		0 0 24px rgba(164, 236, 191, 0.32);
 }
 
 .edge-zone-up {
