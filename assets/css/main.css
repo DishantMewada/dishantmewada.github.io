@@ -662,6 +662,29 @@ h3 {
 		padding-top: 5.8rem;
 	}
 
+	.about-section {
+		align-items: flex-start;
+		padding-top: 7.25rem;
+	}
+
+	.about-section .section-inner {
+		width: 100%;
+	}
+
+	.about-grid {
+		gap: 1.2rem;
+	}
+
+	.about-section .section-kicker {
+		margin-bottom: 0.55rem;
+	}
+
+	.about-section h2 {
+		font-size: clamp(1.55rem, 7.2vw, 1.9rem);
+		line-height: 1.12;
+		margin-bottom: 0;
+	}
+
 	h1 {
 		font-size: 3rem;
 	}
@@ -708,5 +731,39 @@ h3 {
 
 	.edge-zone-down {
 		padding-bottom: 0.75rem;
+	}
+}
+
+@media (max-width: 640px) and (max-height: 740px) {
+	.about-section {
+		padding-bottom: 1.45rem;
+		padding-top: 6.75rem;
+	}
+
+	.about-grid {
+		gap: 0.95rem;
+	}
+
+	.about-copy {
+		font-size: 0.9rem;
+		line-height: 1.5;
+	}
+
+	.about-copy p {
+		margin-bottom: 0.7rem;
+	}
+
+	.about-section h2 {
+		font-size: 1.5rem;
+	}
+
+	.skill-list {
+		gap: 0.34rem 0.85rem;
+		margin-top: 0.85rem;
+	}
+
+	.skill-list li {
+		font-size: 0.84rem;
+		padding-top: 0.42rem;
 	}
 }
