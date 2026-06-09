@@ -524,7 +524,7 @@ h3 {
 .edge-zone-up {
 	height: var(--edge-block-size);
 	left: 0;
-	padding-top: clamp(4.25rem, 8vh, 5.4rem);
+	padding-top: clamp(4.75rem, 8.8vh, 5.95rem);
 	right: 0;
 	top: 0;
 	align-items: flex-start;
@@ -726,7 +726,7 @@ h3 {
 	}
 
 	.edge-zone-up {
-		padding-top: 4.18rem;
+		padding-top: 4.75rem;
 	}
 
 	.edge-zone-down {
