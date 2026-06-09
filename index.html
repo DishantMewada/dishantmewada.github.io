@@ -94,23 +94,19 @@
 		<p>&copy; Dishant Mewada</p>
 	</footer>
 
-	<div class="direction-nav" aria-label="Directional page navigation">
-		<button class="direction-button direction-button-up" type="button" data-direction="up">
-			<span class="arrow-symbol" aria-hidden="true">&uarr;</span>
-			<span class="arrow-label">Home</span>
-		</button>
-		<button class="direction-button direction-button-right" type="button" data-direction="right">
-			<span class="arrow-symbol" aria-hidden="true">&rarr;</span>
-			<span class="arrow-label">About</span>
-		</button>
-		<button class="direction-button direction-button-down" type="button" data-direction="down">
-			<span class="arrow-symbol" aria-hidden="true">&darr;</span>
-			<span class="arrow-label">About</span>
-		</button>
-		<button class="direction-button direction-button-left" type="button" data-direction="left">
-			<span class="arrow-symbol" aria-hidden="true">&larr;</span>
-			<span class="arrow-label">Home</span>
-		</button>
+	<div class="edge-navigation" aria-label="Directional page navigation">
+		<div class="edge-zone edge-zone-up" data-direction="up" role="link" tabindex="0">
+			<span class="edge-label">Home</span>
+		</div>
+		<div class="edge-zone edge-zone-right" data-direction="right" role="link" tabindex="0">
+			<span class="edge-label">About</span>
+		</div>
+		<div class="edge-zone edge-zone-down" data-direction="down" role="link" tabindex="0">
+			<span class="edge-label">About</span>
+		</div>
+		<div class="edge-zone edge-zone-left" data-direction="left" role="link" tabindex="0">
+			<span class="edge-label">Home</span>
+		</div>
 	</div>
 
 	<script>
@@ -120,7 +116,7 @@
 				id: element.id,
 				name: element.dataset.pageName
 			}));
-			const controls = Array.from(document.querySelectorAll('.direction-button'));
+			const edgeZones = Array.from(document.querySelectorAll('.edge-zone'));
 			const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 			const navLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
 			const previousDirections = new Set(['up', 'left']);
@@ -129,6 +125,7 @@
 			let currentIndex = Math.max(0, pages.findIndex((page) => `#${page.id}` === window.location.hash));
 			let pointerStart = null;
 			let isNavigating = false;
+			let suppressEdgeClick = false;
 
 			const destinationIndex = (direction) => currentIndex + (previousDirections.has(direction) ? -1 : 1);
 
@@ -155,7 +152,7 @@
 				pages.forEach(clearSlideStyles);
 				currentIndex = index;
 				pages[currentIndex].element.classList.add('page-active');
-				updateControls();
+				updateEdgeNavigation();
 				updateNavState();
 
 				if (updateUrl) {
@@ -179,20 +176,27 @@
 				});
 			};
 
-			const updateControls = () => {
-				controls.forEach((button) => {
-					const direction = button.dataset.direction;
+			const updateEdgeNavigation = () => {
+				edgeZones.forEach((zone) => {
+					const direction = zone.dataset.direction;
 					const targetIndex = destinationIndex(direction);
 					const targetPage = pages[targetIndex];
+					const label = zone.querySelector('.edge-label');
 
 					if (!targetPage) {
-						button.hidden = true;
+						zone.classList.add('is-disabled');
+						zone.setAttribute('aria-hidden', 'true');
+						zone.removeAttribute('aria-label');
+						zone.tabIndex = -1;
+						label.textContent = '';
 						return;
 					}
 
-					button.hidden = false;
-					button.querySelector('.arrow-label').textContent = targetPage.name;
-					button.setAttribute('aria-label', `Go to ${targetPage.name}`);
+					zone.classList.remove('is-disabled');
+					zone.removeAttribute('aria-hidden');
+					zone.tabIndex = 0;
+					label.textContent = targetPage.name;
+					zone.setAttribute('aria-label', `Go to ${targetPage.name}`);
 				});
 			};
 
@@ -246,7 +250,7 @@
 					targetPage.element.classList.add('page-active');
 					currentIndex = targetIndex;
 					isNavigating = false;
-					updateControls();
+					updateEdgeNavigation();
 					updateNavState();
 					const hash = targetPage.id === 'top' ? window.location.pathname : `#${targetPage.id}`;
 					window.history.replaceState(null, '', hash);
@@ -257,8 +261,31 @@
 				goToIndex(destinationIndex(direction), direction);
 			};
 
-			controls.forEach((button) => {
-				button.addEventListener('click', () => goTo(button.dataset.direction));
+			const suppressNextEdgeClick = () => {
+				suppressEdgeClick = true;
+				window.setTimeout(() => {
+					suppressEdgeClick = false;
+				}, 450);
+			};
+
+			edgeZones.forEach((zone) => {
+				zone.addEventListener('click', () => {
+					if (suppressEdgeClick) {
+						suppressEdgeClick = false;
+						return;
+					}
+
+					if (!zone.classList.contains('is-disabled')) {
+						goTo(zone.dataset.direction);
+					}
+				});
+
+				zone.addEventListener('keydown', (event) => {
+					if ((event.key === 'Enter' || event.key === ' ') && !zone.classList.contains('is-disabled')) {
+						event.preventDefault();
+						goTo(zone.dataset.direction);
+					}
+				});
 			});
 
 			anchorLinks.forEach((link) => {
@@ -299,10 +326,12 @@
 					return;
 				}
 
+				const edgeZone = event.target.closest('.edge-zone:not(.is-disabled)');
 				pointerStart = {
 					x: event.clientX,
 					y: event.clientY,
-					dragging: false
+					dragging: false,
+					edgeDirection: edgeZone ? edgeZone.dataset.direction : null
 				};
 			}, { passive: true });
 
@@ -333,6 +362,7 @@
 				}
 
 				const activePage = pages[currentIndex].element;
+				const start = pointerStart;
 				const deltaX = event.clientX - pointerStart.x;
 				const deltaY = event.clientY - pointerStart.y;
 				const absX = Math.abs(deltaX);
@@ -346,7 +376,15 @@
 				activePage.style.removeProperty('--slide-scale');
 
 				if (Math.max(absX, absY) < 64) {
+					if (start.edgeDirection) {
+						suppressNextEdgeClick();
+						goTo(start.edgeDirection);
+					}
 					return;
+				}
+
+				if (start.edgeDirection) {
+					suppressNextEdgeClick();
 				}
 
 				if (absX > absY) {

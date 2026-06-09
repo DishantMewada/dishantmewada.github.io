@@ -428,213 +428,170 @@ h3 {
 	margin: 0;
 }
 
-.direction-nav {
+.edge-navigation {
+	--edge-side-size: clamp(3.1rem, 7vw, 5.25rem);
+	--edge-block-size: clamp(5.4rem, 12vh, 7.4rem);
+	inset: 0;
 	pointer-events: none;
 	position: fixed;
-	z-index: 20;
+	z-index: 22;
 }
 
-.direction-button {
-	--edge-angle: 135deg;
-	--edge-glow-x: 50%;
-	--edge-glow-y: 50%;
-	--edge-shift-x: 0;
-	--edge-shift-y: 0;
-	--edge-tint-a: rgba(255, 255, 255, 0.32);
-	--edge-tint-b: rgba(127, 168, 152, 0.12);
-	--edge-shadow: rgba(17, 37, 33, 0.12);
+.edge-zone {
 	align-items: center;
-	backdrop-filter: blur(22px) saturate(170%);
-	background:
-		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0) 38%),
-		linear-gradient(var(--edge-angle), var(--edge-tint-a), var(--edge-tint-b)),
-		rgba(251, 253, 251, 0.09);
-	border: 1px solid rgba(255, 255, 255, 0.26);
-	border-radius: 999px;
-	box-shadow:
-		0 22px 64px var(--edge-shadow),
-		0 0 52px rgba(127, 168, 152, 0.12),
-		inset 0 1px 0 rgba(255, 255, 255, 0.42),
-		inset 0 -18px 42px rgba(47, 117, 109, 0.06),
-		inset 0 0 34px rgba(255, 255, 255, 0.1);
-	color: rgba(32, 51, 47, 0.78);
+	color: rgba(255, 255, 255, 0.78);
 	cursor: pointer;
-	display: inline-flex;
-	font: inherit;
-	font-size: 0.8rem;
-	font-weight: 800;
-	gap: 0.5rem;
-	letter-spacing: 0.06em;
-	min-height: 3rem;
-	opacity: 0.68;
-	padding: 0.62rem 1.05rem;
+	display: flex;
+	font-size: 0.72rem;
+	font-weight: 850;
+	justify-content: center;
+	letter-spacing: 0.18em;
+	overflow: hidden;
 	pointer-events: auto;
 	position: fixed;
-	overflow: hidden;
-	isolation: isolate;
 	text-transform: uppercase;
-	text-shadow: 0 1px 18px rgba(255, 255, 255, 0.72);
-	touch-action: manipulation;
-	transition: background-color 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, color 0.24s ease, opacity 0.24s ease, transform 0.24s ease;
-	z-index: 40;
+	text-shadow: 0 1px 16px rgba(0, 0, 0, 0.72);
+	touch-action: none;
+	user-select: none;
+	z-index: 22;
 }
 
-.direction-button::before {
-	background:
-		radial-gradient(ellipse at center, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 62%),
-		radial-gradient(ellipse at center, rgba(127, 168, 152, 0.2), rgba(127, 168, 152, 0) 72%);
+.edge-zone::before,
+.edge-zone::after {
 	content: "";
-	filter: blur(11px);
-	inset: -1.1rem;
-	opacity: 0.5;
+	inset: 0;
 	pointer-events: none;
 	position: absolute;
-	transform: translate3d(var(--edge-shift-x), var(--edge-shift-y), 0);
-	transition: opacity 0.24s ease, transform 0.24s ease;
-	z-index: -1;
+	transition: opacity 0.22s ease;
+	z-index: 0;
 }
 
-.direction-button::after {
-	background:
-		linear-gradient(120deg, transparent 15%, rgba(255, 255, 255, 0.4) 48%, transparent 78%),
-		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-	border-radius: inherit;
-	content: "";
-	inset: 0.12rem;
-	opacity: 0.3;
+.edge-zone::before {
+	opacity: 0.74;
+}
+
+.edge-zone::after {
+	opacity: 0.18;
+}
+
+.edge-zone:hover::before,
+.edge-zone:focus-visible::before,
+.edge-zone:active::before {
+	opacity: 1;
+}
+
+.edge-zone:hover::after,
+.edge-zone:focus-visible::after,
+.edge-zone:active::after {
+	opacity: 0.36;
+}
+
+.edge-zone:focus-visible {
+	outline: 2px solid rgba(255, 255, 255, 0.58);
+	outline-offset: -0.55rem;
+}
+
+.edge-zone.is-disabled {
+	cursor: default;
 	pointer-events: none;
-	position: absolute;
-	transform: translateX(-36%);
-	transition: opacity 0.24s ease, transform 0.38s ease;
+}
+
+.edge-zone.is-disabled::before {
+	opacity: 0.46;
+}
+
+.edge-zone.is-disabled::after,
+.edge-zone.is-disabled .edge-label {
+	opacity: 0;
+}
+
+.edge-label {
+	position: relative;
+	transition: color 0.22s ease, opacity 0.22s ease, text-shadow 0.22s ease;
+	white-space: nowrap;
 	z-index: 1;
 }
 
-.direction-button:hover,
-.direction-button:focus-visible {
-	background:
-		radial-gradient(circle at var(--edge-glow-x) var(--edge-glow-y), rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0) 42%),
-		linear-gradient(var(--edge-angle), rgba(255, 255, 255, 0.4), rgba(207, 130, 109, 0.1) 46%, rgba(47, 117, 109, 0.14)),
-		rgba(251, 253, 251, 0.14);
-	border-color: rgba(255, 255, 255, 0.4);
-	box-shadow:
-		0 26px 76px rgba(17, 37, 33, 0.22),
-		0 0 70px rgba(207, 130, 109, 0.16),
-		0 0 44px rgba(127, 168, 152, 0.16),
-		inset 0 1px 0 rgba(255, 255, 255, 0.58),
-		inset 0 -18px 42px rgba(47, 117, 109, 0.09);
-	color: var(--teal);
-	opacity: 0.92;
-	transform: translate3d(0, -1px, 0);
+.edge-zone:hover .edge-label,
+.edge-zone:focus-visible .edge-label,
+.edge-zone:active .edge-label {
+	color: #ffffff;
+	text-shadow:
+		0 1px 12px rgba(0, 0, 0, 0.86),
+		0 0 24px rgba(255, 255, 255, 0.28);
 }
 
-.direction-button:hover::before,
-.direction-button:focus-visible::before {
-	opacity: 0.78;
-	transform: translate3d(calc(var(--edge-shift-x) * 1.4), calc(var(--edge-shift-y) * 1.4), 0) scale(1.08);
+.edge-zone-up {
+	height: var(--edge-block-size);
+	left: 0;
+	padding-top: clamp(4.25rem, 8vh, 5.4rem);
+	right: 0;
+	top: 0;
+	align-items: flex-start;
 }
 
-.direction-button:hover::after,
-.direction-button:focus-visible::after {
-	opacity: 0.56;
-	transform: translateX(28%);
+.edge-zone-up::before {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.54), rgba(0, 0, 0, 0.26) 42%, rgba(0, 0, 0, 0));
 }
 
-.direction-button:focus-visible {
-	outline: 3px solid rgba(207, 130, 109, 0.35);
-	outline-offset: 3px;
+.edge-zone-up::after {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
 }
 
-.direction-button[hidden] {
-	display: none;
+.edge-zone-right {
+	bottom: 0;
+	right: 0;
+	top: 0;
+	width: var(--edge-side-size);
 }
 
-.arrow-symbol {
-	align-items: center;
-	background:
-		radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0) 42%),
-		linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(47, 117, 109, 0.07));
-	border: 1px solid rgba(255, 255, 255, 0.26);
-	border-radius: 50%;
-	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.38),
-		inset 0 -8px 16px rgba(47, 117, 109, 0.06),
-		0 9px 24px rgba(47, 117, 109, 0.09);
-	color: var(--teal);
-	display: inline-flex;
-	font-size: 1.05rem;
-	height: 1.55rem;
-	justify-content: center;
-	line-height: 1;
-	position: relative;
-	width: 1.55rem;
-	z-index: 2;
+.edge-zone-right::before {
+	background: linear-gradient(270deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.26) 46%, rgba(0, 0, 0, 0));
 }
 
-.arrow-label {
-	position: relative;
-	text-shadow: 0 1px 14px rgba(255, 255, 255, 0.82);
-	white-space: nowrap;
-	z-index: 2;
+.edge-zone-right::after {
+	background: linear-gradient(270deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
 }
 
-.direction-button-up {
-	--edge-angle: 180deg;
-	--edge-glow-x: 50%;
-	--edge-glow-y: 0%;
-	--edge-shift-y: -0.18rem;
-	left: 50%;
-	top: 4.9rem;
-	transform: translateX(-50%);
+.edge-zone-right .edge-label {
+	writing-mode: vertical-rl;
 }
 
-.direction-button-up:hover,
-.direction-button-up:focus-visible {
-	transform: translateX(-50%) translateY(-2px);
+.edge-zone-down {
+	align-items: flex-end;
+	bottom: 0;
+	height: var(--edge-block-size);
+	left: 0;
+	padding-bottom: clamp(0.9rem, 2.4vh, 1.35rem);
+	right: 0;
 }
 
-.direction-button-right {
-	--edge-angle: 270deg;
-	--edge-glow-x: 100%;
-	--edge-glow-y: 50%;
-	--edge-shift-x: 0.18rem;
-	right: 1rem;
-	top: 50%;
-	transform: translateY(-50%);
+.edge-zone-down::before {
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.26) 46%, rgba(0, 0, 0, 0));
 }
 
-.direction-button-right:hover,
-.direction-button-right:focus-visible {
-	transform: translateY(-50%) translateX(2px);
+.edge-zone-down::after {
+	background: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
-.direction-button-down {
-	--edge-angle: 0deg;
-	--edge-glow-x: 50%;
-	--edge-glow-y: 100%;
-	--edge-shift-y: 0.18rem;
-	bottom: 1rem;
-	left: 50%;
-	transform: translateX(-50%);
+.edge-zone-left {
+	bottom: 0;
+	left: 0;
+	top: 0;
+	width: var(--edge-side-size);
 }
 
-.direction-button-down:hover,
-.direction-button-down:focus-visible {
-	transform: translateX(-50%) translateY(2px);
+.edge-zone-left::before {
+	background: linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.26) 46%, rgba(0, 0, 0, 0));
 }
 
-.direction-button-left {
-	--edge-angle: 90deg;
-	--edge-glow-x: 0%;
-	--edge-glow-y: 50%;
-	--edge-shift-x: -0.18rem;
-	left: 1rem;
-	top: 50%;
-	transform: translateY(-50%);
+.edge-zone-left::after {
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
 }
 
-.direction-button-left:hover,
-.direction-button-left:focus-visible {
-	transform: translateY(-50%) translateX(-2px);
+.edge-zone-left .edge-label {
+	transform: rotate(180deg);
+	writing-mode: vertical-rl;
 }
 
 @media (max-width: 920px) {
@@ -724,21 +681,21 @@ h3 {
 		min-height: 12rem;
 	}
 
-	.direction-button {
-		font-size: 0.78rem;
-		min-height: 2.5rem;
-		padding: 0.5rem 0.75rem;
+	.edge-navigation {
+		--edge-side-size: 2.65rem;
+		--edge-block-size: 5.35rem;
 	}
 
-	.direction-button-up {
-		top: 5.35rem;
+	.edge-zone {
+		font-size: 0.62rem;
+		letter-spacing: 0.14em;
 	}
 
-	.direction-button-left {
-		left: 0.55rem;
+	.edge-zone-up {
+		padding-top: 4.18rem;
 	}
 
-	.direction-button-right {
-		right: 0.55rem;
+	.edge-zone-down {
+		padding-bottom: 0.75rem;
 	}
 }
