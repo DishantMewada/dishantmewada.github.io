@@ -367,6 +367,80 @@ h3 {
 	font-size: 1.05rem;
 }
 
+.skills-section {
+	background:
+		linear-gradient(130deg, rgba(23, 40, 37, 0.96), rgba(42, 73, 66, 0.9) 48%, rgba(35, 58, 53, 0.98)),
+		var(--ink);
+	color: #f7fbf8;
+}
+
+.skills-section .section-kicker {
+	color: #aee7c3;
+}
+
+.skills-layout {
+	align-items: center;
+	display: grid;
+	gap: clamp(2rem, 6vw, 6rem);
+	grid-template-columns: minmax(0, 0.72fr) minmax(20rem, 1.28fr);
+	width: 100%;
+}
+
+.skills-copy {
+	max-width: 420px;
+}
+
+.skills-copy p:not(.section-kicker) {
+	color: rgba(247, 251, 248, 0.76);
+	margin-bottom: 0;
+}
+
+.skills-cloud {
+	cursor: grab;
+	height: clamp(24rem, 62vh, 42rem);
+	min-height: 24rem;
+	position: relative;
+	touch-action: none;
+	width: 100%;
+}
+
+.skills-cloud:active {
+	cursor: grabbing;
+}
+
+.skills-cloud canvas {
+	display: block;
+	height: 100%;
+	inset: 0;
+	position: absolute;
+	width: 100%;
+}
+
+.cloud-fallback {
+	align-content: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.65rem;
+	height: 100%;
+	justify-content: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cloud-fallback li {
+	background: rgba(231, 255, 241, 0.1);
+	border: 1px solid rgba(231, 255, 241, 0.24);
+	border-radius: 999px;
+	color: rgba(247, 251, 248, 0.88);
+	font-weight: 750;
+	padding: 0.44rem 0.72rem;
+}
+
+.skills-cloud.is-rendered .cloud-fallback {
+	display: none;
+}
+
 .skill-list {
 	display: grid;
 	gap: 0.65rem 1.2rem;
@@ -710,8 +784,13 @@ h3 {
 	}
 
 	.about-grid,
+	.skills-layout,
 	.contact-grid {
 		grid-template-columns: 1fr;
+	}
+
+	.skills-cloud {
+		height: clamp(22rem, 52vh, 32rem);
 	}
 }
 
@@ -784,6 +863,29 @@ h3 {
 	.about-section {
 		align-items: flex-start;
 		padding-top: 7.25rem;
+	}
+
+	.skills-section {
+		align-items: flex-start;
+		padding-top: 7.1rem;
+	}
+
+	.skills-layout {
+		gap: 0.75rem;
+	}
+
+	.skills-copy {
+		max-width: 100%;
+	}
+
+	.skills-copy p:not(.section-kicker) {
+		font-size: 0.92rem;
+		line-height: 1.48;
+	}
+
+	.skills-cloud {
+		height: min(21rem, 45vh);
+		min-height: 18rem;
 	}
 
 	.about-section .section-inner {
@@ -862,6 +964,20 @@ h3 {
 @media (max-width: 640px) and (max-height: 740px) {
 	.hero-tags {
 		display: none;
+	}
+
+	.skills-section {
+		padding-bottom: 1.35rem;
+		padding-top: 6.65rem;
+	}
+
+	.skills-copy p:not(.section-kicker) {
+		display: none;
+	}
+
+	.skills-cloud {
+		height: 17.5rem;
+		min-height: 16rem;
 	}
 
 	.about-section {

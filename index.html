@@ -12,6 +12,7 @@
 		<a class="brand" href="#top">Dishant Mewada</a>
 		<div class="nav-links">
 			<a href="#about">About</a>
+			<a href="#skills">Skills</a>
 			<a href="#projects">Projects</a>
 			<a href="#contact">Contact</a>
 		</div>
@@ -51,6 +52,32 @@
 						<li>AWS</li>
 						<li>REST APIs</li>
 						<li>HTML, CSS, JavaScript</li>
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="section skills-section" id="skills" data-page-name="Skills">
+			<div class="section-inner skills-layout">
+				<div class="skills-copy">
+					<p class="section-kicker">Skills</p>
+					<h2>A rounded cloud of practical tools.</h2>
+					<p>A calm orbit of the tools and habits I use to turn complex ideas into useful systems.</p>
+				</div>
+				<div class="skills-cloud" data-skill-cloud aria-label="Interactive 3D skills word cloud" role="img">
+					<ul class="cloud-fallback" aria-label="Skills">
+						<li>Problem Solving</li>
+						<li>Python</li>
+						<li>Machine Learning</li>
+						<li>Cloud</li>
+						<li>AWS</li>
+						<li>REST APIs</li>
+						<li>JavaScript</li>
+						<li>Web Experiences</li>
+						<li>Data</li>
+						<li>Security</li>
+						<li>Automation</li>
+						<li>Testing</li>
 					</ul>
 				</div>
 			</div>
@@ -114,6 +141,200 @@
 			<span class="edge-label">Home</span>
 		</div>
 	</div>
+
+	<script type="module">
+		import * as THREE from "https://unpkg.com/three@0.165.0/build/three.module.js";
+
+		const skillWords = [
+			{ text: "Problem Solving", weight: 1 },
+			{ text: "Python", weight: 0.95 },
+			{ text: "Machine Learning", weight: 0.92 },
+			{ text: "Cloud", weight: 0.86 },
+			{ text: "AWS", weight: 0.72 },
+			{ text: "REST APIs", weight: 0.7 },
+			{ text: "JavaScript", weight: 0.68 },
+			{ text: "Web Experiences", weight: 0.66 },
+			{ text: "Data", weight: 0.62 },
+			{ text: "Security", weight: 0.58 },
+			{ text: "Automation", weight: 0.56 },
+			{ text: "Testing", weight: 0.52 },
+			{ text: "Git", weight: 0.48 },
+			{ text: "SQL", weight: 0.46 },
+			{ text: "UX", weight: 0.44 },
+			{ text: "APIs", weight: 0.42 },
+			{ text: "Debugging", weight: 0.4 },
+			{ text: "Design", weight: 0.38 }
+		];
+
+		const cloudElement = document.querySelector("[data-skill-cloud]");
+
+		const nextPowerOfTwo = (value) => 2 ** Math.ceil(Math.log2(value));
+
+		const makeTextSprite = (word, index) => {
+			const canvas = document.createElement("canvas");
+			const context = canvas.getContext("2d");
+			const fontSize = Math.round(34 + word.weight * 26);
+			const fontFamily = 'Inter, "Segoe UI", Arial, sans-serif';
+
+			context.font = `800 ${fontSize}px ${fontFamily}`;
+			const metrics = context.measureText(word.text);
+			canvas.width = nextPowerOfTwo(metrics.width + fontSize * 1.2);
+			canvas.height = nextPowerOfTwo(fontSize * 1.9);
+
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.font = `800 ${fontSize}px ${fontFamily}`;
+			context.textAlign = "center";
+			context.textBaseline = "middle";
+			context.shadowColor = "rgba(10, 26, 22, 0.55)";
+			context.shadowBlur = 18;
+			context.shadowOffsetY = 6;
+			context.fillStyle = index % 3 === 0 ? "#f3b8a5" : index % 3 === 1 ? "#d7f5e2" : "#f7fbf8";
+			context.fillText(word.text, canvas.width / 2, canvas.height / 2);
+
+			const texture = new THREE.CanvasTexture(canvas);
+			texture.colorSpace = THREE.SRGBColorSpace;
+			texture.minFilter = THREE.LinearFilter;
+			texture.magFilter = THREE.LinearFilter;
+
+			const material = new THREE.SpriteMaterial({
+				map: texture,
+				transparent: true,
+				depthWrite: false
+			});
+
+			const sprite = new THREE.Sprite(material);
+			const baseHeight = 18 + word.weight * 16;
+			const aspect = canvas.width / canvas.height;
+			sprite.scale.set(baseHeight * aspect, baseHeight, 1);
+			sprite.userData.baseHeight = baseHeight;
+			sprite.userData.aspect = aspect;
+			return sprite;
+		};
+
+		const initSkillCloud = (element) => {
+			if (!element) {
+				return;
+			}
+
+			try {
+				const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+				const scene = new THREE.Scene();
+				const camera = new THREE.PerspectiveCamera(42, 1, 1, 1000);
+				const group = new THREE.Group();
+				const pointer = { active: false, x: 0, y: 0 };
+				const velocity = new THREE.Vector2(0.0022, 0.0016);
+				const radius = 150;
+				const sprites = skillWords.map(makeTextSprite);
+
+				renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+				renderer.setClearColor(0x000000, 0);
+				element.appendChild(renderer.domElement);
+				element.classList.add("is-rendered");
+				scene.add(group);
+				camera.position.z = 430;
+
+				sprites.forEach((sprite, index) => {
+					const y = 1 - (index / Math.max(1, sprites.length - 1)) * 2;
+					const radial = Math.sqrt(1 - y * y);
+					const theta = index * Math.PI * (3 - Math.sqrt(5));
+					sprite.position.set(
+						Math.cos(theta) * radial * radius,
+						y * radius,
+						Math.sin(theta) * radial * radius
+					);
+					group.add(sprite);
+				});
+
+				const resize = () => {
+					const bounds = element.getBoundingClientRect();
+					const width = Math.max(260, Math.floor(bounds.width));
+					const height = Math.max(260, Math.floor(bounds.height));
+					renderer.setSize(width, height, false);
+					camera.aspect = width / height;
+					camera.position.z = width < 560 ? 500 : 430;
+					camera.updateProjectionMatrix();
+				};
+
+				const updateDepth = () => {
+					const worldPosition = new THREE.Vector3();
+
+					sprites.forEach((sprite) => {
+						sprite.getWorldPosition(worldPosition);
+						const depth = THREE.MathUtils.clamp((worldPosition.z + radius) / (radius * 2), 0, 1);
+						const scale = 0.74 + depth * 0.46;
+						sprite.material.opacity = 0.3 + depth * 0.7;
+						sprite.scale.set(
+							sprite.userData.baseHeight * sprite.userData.aspect * scale,
+							sprite.userData.baseHeight * scale,
+							1
+						);
+					});
+				};
+
+				const animate = () => {
+					group.rotation.y += velocity.x;
+					group.rotation.x += velocity.y;
+					velocity.multiplyScalar(0.985);
+
+					if (!pointer.active) {
+						velocity.x += 0.00004;
+					}
+
+					updateDepth();
+					renderer.render(scene, camera);
+					window.requestAnimationFrame(animate);
+				};
+
+				const stopPageSwipe = (event) => {
+					event.stopPropagation();
+				};
+
+				element.addEventListener("pointerdown", (event) => {
+					stopPageSwipe(event);
+					pointer.active = true;
+					pointer.x = event.clientX;
+					pointer.y = event.clientY;
+					element.setPointerCapture(event.pointerId);
+				});
+
+				element.addEventListener("pointermove", (event) => {
+					if (!pointer.active) {
+						return;
+					}
+
+					stopPageSwipe(event);
+					const deltaX = event.clientX - pointer.x;
+					const deltaY = event.clientY - pointer.y;
+					pointer.x = event.clientX;
+					pointer.y = event.clientY;
+					velocity.x = THREE.MathUtils.clamp(deltaX * 0.0035, -0.08, 0.08);
+					velocity.y = THREE.MathUtils.clamp(deltaY * 0.0035, -0.08, 0.08);
+				});
+
+				element.addEventListener("pointerup", (event) => {
+					stopPageSwipe(event);
+					pointer.active = false;
+				});
+
+				element.addEventListener("pointercancel", () => {
+					pointer.active = false;
+				});
+
+				element.addEventListener("wheel", (event) => {
+					event.stopPropagation();
+					velocity.x += event.deltaY * 0.00006;
+				}, { passive: true });
+
+				window.addEventListener("resize", resize);
+				resize();
+				animate();
+			} catch (error) {
+				element.classList.remove("is-rendered");
+			}
+		};
+
+		initSkillCloud(cloudElement);
+	</script>
 
 	<script>
 		(() => {
@@ -336,7 +557,7 @@
 			});
 
 			document.addEventListener('pointerdown', (event) => {
-				if ((event.button && event.button !== 0) || event.target.closest('a, button')) {
+				if ((event.button && event.button !== 0) || event.target.closest('a, button, .skills-cloud')) {
 					return;
 				}
 
