@@ -103,10 +103,6 @@
 		</section>
 	</main>
 
-	<footer class="site-footer">
-		<p>&copy; Dishant Mewada</p>
-	</footer>
-
 	<div class="side-arrows" aria-label="Page navigation">
 		<button class="side-arrow side-arrow-left" type="button" data-side-direction="left" aria-label="Previous page">
 			<span aria-hidden="true"></span>
@@ -223,7 +219,6 @@
 				renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 				renderer.setClearColor(0x000000, 0);
 				element.appendChild(renderer.domElement);
-				element.classList.add("is-rendered");
 				scene.add(group);
 				camera.position.z = 430;
 
@@ -379,8 +374,8 @@
 				window.addEventListener("resize", resize);
 				resize();
 				animate();
-			} catch (error) {
-				element.classList.remove("is-rendered");
+			} catch {
+				return;
 			}
 		};
 
@@ -455,7 +450,6 @@
 					const targetPage = pages[destinationIndex(button.dataset.sideDirection)];
 
 					button.disabled = !targetPage;
-					button.classList.toggle('is-disabled', !targetPage);
 
 					if (targetPage) {
 						button.removeAttribute('aria-hidden');
@@ -574,8 +568,7 @@
 
 				pointerStart = {
 					x: event.clientX,
-					y: event.clientY,
-					dragging: false
+					y: event.clientY
 				};
 			}, { passive: true });
 
@@ -592,7 +585,6 @@
 					return;
 				}
 
-				pointerStart.dragging = true;
 				activePage.classList.add('page-dragging');
 				activePage.style.setProperty('--slide-x', `${deltaX * 0.2}px`);
 				activePage.style.setProperty('--slide-y', '0px');
