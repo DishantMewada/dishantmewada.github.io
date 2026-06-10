@@ -217,10 +217,14 @@
 				const scene = new THREE.Scene();
 				const camera = new THREE.PerspectiveCamera(42, 1, 1, 1000);
 				const group = new THREE.Group();
-				const pointer = { active: false, x: 0, y: 0 };
+				const activePointers = new Map();
+				const drag = { active: false, x: 0, y: 0 };
+				const pinch = { active: false, distance: 0, zoom: 1 };
 				const velocity = new THREE.Vector2(0.0022, 0.0016);
 				const radius = 150;
 				const sprites = skillWords.map(makeTextSprite);
+				let baseCloudScale = 1;
+				let userZoom = 1;
 
 				renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 				renderer.setClearColor(0x000000, 0);
@@ -241,6 +245,19 @@
 					group.add(sprite);
 				});
 
+				const applyCloudScale = () => {
+					group.scale.setScalar(baseCloudScale * userZoom);
+				};
+
+				const pointerDistance = () => {
+					if (activePointers.size < 2) {
+						return 0;
+					}
+
+					const [first, second] = Array.from(activePointers.values());
+					return Math.hypot(first.x - second.x, first.y - second.y);
+				};
+
 				const resize = () => {
 					const bounds = element.getBoundingClientRect();
 					const width = Math.max(260, Math.floor(bounds.width));
@@ -248,7 +265,8 @@
 					const cloudScale = width < 420 ? 0.72 : width < 560 ? 0.8 : width < 820 ? 0.92 : 1;
 
 					renderer.setSize(width, height, false);
-					group.scale.setScalar(cloudScale);
+					baseCloudScale = cloudScale;
+					applyCloudScale();
 					camera.aspect = width / height;
 					camera.position.z = width < 420 ? 610 : width < 560 ? 560 : width < 820 ? 470 : 430;
 					camera.updateProjectionMatrix();
@@ -275,7 +293,7 @@
 					group.rotation.x += velocity.y;
 					velocity.multiplyScalar(0.985);
 
-					if (!pointer.active) {
+					if (!activePointers.size) {
 						velocity.x += 0.00004;
 					}
 
@@ -290,33 +308,73 @@
 
 				element.addEventListener("pointerdown", (event) => {
 					stopPageSwipe(event);
-					pointer.active = true;
-					pointer.x = event.clientX;
-					pointer.y = event.clientY;
+					event.preventDefault();
+					activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+					drag.active = activePointers.size === 1;
+					drag.x = event.clientX;
+					drag.y = event.clientY;
+
+					if (activePointers.size === 2) {
+						pinch.active = true;
+						pinch.distance = pointerDistance();
+						pinch.zoom = userZoom;
+						drag.active = false;
+					}
+
 					element.setPointerCapture(event.pointerId);
 				});
 
 				element.addEventListener("pointermove", (event) => {
-					if (!pointer.active) {
+					if (!activePointers.has(event.pointerId)) {
 						return;
 					}
 
 					stopPageSwipe(event);
-					const deltaX = event.clientX - pointer.x;
-					const deltaY = event.clientY - pointer.y;
-					pointer.x = event.clientX;
-					pointer.y = event.clientY;
+					event.preventDefault();
+					activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+					if (activePointers.size >= 2 && pinch.active) {
+						const distance = pointerDistance();
+
+						if (pinch.distance > 0) {
+							userZoom = THREE.MathUtils.clamp(pinch.zoom * (distance / pinch.distance), 0.62, 1.55);
+							applyCloudScale();
+						}
+
+						return;
+					}
+
+					if (!drag.active) {
+						return;
+					}
+
+					const deltaX = event.clientX - drag.x;
+					const deltaY = event.clientY - drag.y;
+					drag.x = event.clientX;
+					drag.y = event.clientY;
 					velocity.x = THREE.MathUtils.clamp(deltaX * 0.0035, -0.08, 0.08);
 					velocity.y = THREE.MathUtils.clamp(deltaY * 0.0035, -0.08, 0.08);
 				});
 
 				element.addEventListener("pointerup", (event) => {
 					stopPageSwipe(event);
-					pointer.active = false;
+					activePointers.delete(event.pointerId);
+					pinch.active = false;
+
+					if (activePointers.size === 1) {
+						const [remaining] = Array.from(activePointers.values());
+						drag.active = true;
+						drag.x = remaining.x;
+						drag.y = remaining.y;
+					} else {
+						drag.active = false;
+					}
 				});
 
-				element.addEventListener("pointercancel", () => {
-					pointer.active = false;
+				element.addEventListener("pointercancel", (event) => {
+					activePointers.delete(event.pointerId);
+					pinch.active = false;
+					drag.active = false;
 				});
 
 				element.addEventListener("wheel", (event) => {
