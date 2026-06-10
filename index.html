@@ -107,21 +107,6 @@
 		<p>&copy; Dishant Mewada</p>
 	</footer>
 
-	<div class="edge-navigation" aria-label="Directional page navigation">
-		<div class="edge-zone edge-zone-up" data-direction="up" role="link" tabindex="0">
-			<span class="edge-label">Home</span>
-		</div>
-		<div class="edge-zone edge-zone-right" data-direction="right" role="link" tabindex="0">
-			<span class="edge-label">About</span>
-		</div>
-		<div class="edge-zone edge-zone-down" data-direction="down" role="link" tabindex="0">
-			<span class="edge-label">About</span>
-		</div>
-		<div class="edge-zone edge-zone-left" data-direction="left" role="link" tabindex="0">
-			<span class="edge-label">Home</span>
-		</div>
-	</div>
-
 	<script type="module">
 		import * as THREE from "https://unpkg.com/three@0.165.0/build/three.module.js";
 
@@ -400,32 +385,19 @@
 				id: element.id,
 				name: element.dataset.pageName
 			}));
-			const edgeZones = Array.from(document.querySelectorAll('.edge-zone'));
 			const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 			const navLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
-			const previousDirections = new Set(['up', 'left']);
 			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const transitionDuration = reducedMotion ? 0 : 680;
 			let currentIndex = Math.max(0, pages.findIndex((page) => `#${page.id}` === window.location.hash));
 			let pointerStart = null;
 			let isNavigating = false;
-			let suppressEdgeClick = false;
 
-			const destinationIndex = (direction) => currentIndex + (previousDirections.has(direction) ? -1 : 1);
-
-			const formatEdgeLabel = (name, direction) => {
-				if (direction === 'left' || direction === 'right') {
-					return name.replace(/\s+/g, '').split('').join('\n');
-				}
-
-				return name;
-			};
+			const destinationIndex = (direction) => currentIndex + (direction === 'left' ? -1 : 1);
 
 			const slideVector = (direction) => {
 				const vectors = {
-					up: { x: 0, y: -112, rotate: -1.5 },
 					right: { x: 112, y: 0, rotate: 2.5 },
-					down: { x: 0, y: 112, rotate: 1.5 },
 					left: { x: -112, y: 0, rotate: -2.5 }
 				};
 
@@ -444,7 +416,6 @@
 				pages.forEach(clearSlideStyles);
 				currentIndex = index;
 				pages[currentIndex].element.classList.add('page-active');
-				updateEdgeNavigation();
 				updateNavState();
 
 				if (updateUrl) {
@@ -465,30 +436,6 @@
 					} else {
 						link.removeAttribute('aria-current');
 					}
-				});
-			};
-
-			const updateEdgeNavigation = () => {
-				edgeZones.forEach((zone) => {
-					const direction = zone.dataset.direction;
-					const targetIndex = destinationIndex(direction);
-					const targetPage = pages[targetIndex];
-					const label = zone.querySelector('.edge-label');
-
-					if (!targetPage) {
-						zone.classList.add('is-disabled');
-						zone.setAttribute('aria-hidden', 'true');
-						zone.removeAttribute('aria-label');
-						zone.tabIndex = -1;
-						label.textContent = '';
-						return;
-					}
-
-					zone.classList.remove('is-disabled');
-					zone.removeAttribute('aria-hidden');
-					zone.tabIndex = 0;
-					label.textContent = formatEdgeLabel(targetPage.name, direction);
-					zone.setAttribute('aria-label', `Go to ${targetPage.name}`);
 				});
 			};
 
@@ -542,7 +489,6 @@
 					targetPage.element.classList.add('page-active');
 					currentIndex = targetIndex;
 					isNavigating = false;
-					updateEdgeNavigation();
 					updateNavState();
 					const hash = targetPage.id === 'top' ? window.location.pathname : `#${targetPage.id}`;
 					window.history.replaceState(null, '', hash);
@@ -552,33 +498,6 @@
 			const goTo = (direction) => {
 				goToIndex(destinationIndex(direction), direction);
 			};
-
-			const suppressNextEdgeClick = () => {
-				suppressEdgeClick = true;
-				window.setTimeout(() => {
-					suppressEdgeClick = false;
-				}, 450);
-			};
-
-			edgeZones.forEach((zone) => {
-				zone.addEventListener('click', () => {
-					if (suppressEdgeClick) {
-						suppressEdgeClick = false;
-						return;
-					}
-
-					if (!zone.classList.contains('is-disabled')) {
-						goTo(zone.dataset.direction);
-					}
-				});
-
-				zone.addEventListener('keydown', (event) => {
-					if ((event.key === 'Enter' || event.key === ' ') && !zone.classList.contains('is-disabled')) {
-						event.preventDefault();
-						goTo(zone.dataset.direction);
-					}
-				});
-			});
 
 			anchorLinks.forEach((link) => {
 				link.addEventListener('click', (event) => {
@@ -600,8 +519,6 @@
 				}
 
 				const directionByKey = {
-					ArrowUp: 'up',
-					ArrowDown: 'down',
 					ArrowLeft: 'left',
 					ArrowRight: 'right'
 				};
@@ -618,12 +535,10 @@
 					return;
 				}
 
-				const edgeZone = event.target.closest('.edge-zone:not(.is-disabled)');
 				pointerStart = {
 					x: event.clientX,
 					y: event.clientY,
-					dragging: false,
-					edgeDirection: edgeZone ? edgeZone.dataset.direction : null
+					dragging: false
 				};
 			}, { passive: true });
 
@@ -636,14 +551,14 @@
 				const deltaY = event.clientY - pointerStart.y;
 				const activePage = pages[currentIndex].element;
 
-				if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < 10) {
+				if (Math.abs(deltaX) < 10 || Math.abs(deltaX) < Math.abs(deltaY)) {
 					return;
 				}
 
 				pointerStart.dragging = true;
 				activePage.classList.add('page-dragging');
 				activePage.style.setProperty('--slide-x', `${deltaX * 0.2}px`);
-				activePage.style.setProperty('--slide-y', `${deltaY * 0.2}px`);
+				activePage.style.setProperty('--slide-y', '0px');
 				activePage.style.setProperty('--slide-rotate', `${Math.max(-4, Math.min(4, deltaX * 0.012))}deg`);
 				activePage.style.setProperty('--slide-scale', '0.988');
 			}, { passive: true });
@@ -654,7 +569,6 @@
 				}
 
 				const activePage = pages[currentIndex].element;
-				const start = pointerStart;
 				const deltaX = event.clientX - pointerStart.x;
 				const deltaY = event.clientY - pointerStart.y;
 				const absX = Math.abs(deltaX);
@@ -668,21 +582,11 @@
 				activePage.style.removeProperty('--slide-scale');
 
 				if (Math.max(absX, absY) < 64) {
-					if (start.edgeDirection) {
-						suppressNextEdgeClick();
-						goTo(start.edgeDirection);
-					}
 					return;
-				}
-
-				if (start.edgeDirection) {
-					suppressNextEdgeClick();
 				}
 
 				if (absX > absY) {
 					goTo(deltaX < 0 ? 'right' : 'left');
-				} else {
-					goTo(deltaY < 0 ? 'down' : 'up');
 				}
 			}, { passive: true });
 
