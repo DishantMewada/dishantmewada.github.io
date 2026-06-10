@@ -374,34 +374,21 @@ h3 {
 	color: #f7fbf8;
 }
 
-.skills-section .section-kicker {
-	color: #aee7c3;
-}
-
 .skills-layout {
 	align-items: center;
-	display: grid;
-	gap: clamp(2rem, 6vw, 6rem);
-	grid-template-columns: minmax(0, 0.72fr) minmax(20rem, 1.28fr);
+	display: flex;
+	justify-content: center;
+	max-width: 1320px;
 	width: 100%;
-}
-
-.skills-copy {
-	max-width: 420px;
-}
-
-.skills-copy p:not(.section-kicker) {
-	color: rgba(247, 251, 248, 0.76);
-	margin-bottom: 0;
 }
 
 .skills-cloud {
 	cursor: grab;
-	height: clamp(24rem, 62vh, 42rem);
-	min-height: 24rem;
+	height: clamp(26rem, 72vh, 46rem);
+	min-height: 26rem;
 	position: relative;
 	touch-action: none;
-	width: 100%;
+	width: min(100%, 1160px);
 }
 
 .skills-cloud:active {
@@ -414,31 +401,6 @@ h3 {
 	inset: 0;
 	position: absolute;
 	width: 100%;
-}
-
-.cloud-fallback {
-	align-content: center;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.65rem;
-	height: 100%;
-	justify-content: center;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-.cloud-fallback li {
-	background: rgba(231, 255, 241, 0.1);
-	border: 1px solid rgba(231, 255, 241, 0.24);
-	border-radius: 999px;
-	color: rgba(247, 251, 248, 0.88);
-	font-weight: 750;
-	padding: 0.44rem 0.72rem;
-}
-
-.skills-cloud.is-rendered .cloud-fallback {
-	display: none;
 }
 
 .skill-list {
@@ -784,13 +746,12 @@ h3 {
 	}
 
 	.about-grid,
-	.skills-layout,
 	.contact-grid {
 		grid-template-columns: 1fr;
 	}
 
 	.skills-cloud {
-		height: clamp(22rem, 52vh, 32rem);
+		height: clamp(24rem, 62vh, 38rem);
 	}
 }
 
@@ -866,26 +827,14 @@ h3 {
 	}
 
 	.skills-section {
-		align-items: flex-start;
-		padding-top: 7.1rem;
-	}
-
-	.skills-layout {
-		gap: 0.75rem;
-	}
-
-	.skills-copy {
-		max-width: 100%;
-	}
-
-	.skills-copy p:not(.section-kicker) {
-		font-size: 0.92rem;
-		line-height: 1.48;
+		align-items: center;
+		padding-bottom: 3rem;
+		padding-top: 6.9rem;
 	}
 
 	.skills-cloud {
-		height: min(21rem, 45vh);
-		min-height: 18rem;
+		height: min(31rem, 64vh);
+		min-height: 21rem;
 	}
 
 	.about-section .section-inner {
@@ -967,17 +916,13 @@ h3 {
 	}
 
 	.skills-section {
-		padding-bottom: 1.35rem;
-		padding-top: 6.65rem;
-	}
-
-	.skills-copy p:not(.section-kicker) {
-		display: none;
+		padding-bottom: 1.6rem;
+		padding-top: 6.5rem;
 	}
 
 	.skills-cloud {
-		height: 17.5rem;
-		min-height: 16rem;
+		height: 20rem;
+		min-height: 18rem;
 	}
 
 	.about-section {

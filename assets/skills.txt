@@ -1,0 +1,35 @@
+# Format: Skill Name font_size
+Computer Vision 76
+Deep Learning 72
+Python 70
+OpenCV 68
+Image Segmentation 66
+Object Detection 74
+YOLO 64
+PyTorch 68
+TensorFlow 58
+CNNs 62
+Vision Transformers 60
+Image Processing 66
+OCR 58
+3D Vision 56
+SLAM 52
+Edge AI 54
+ONNX 50
+CUDA 56
+Model Optimization 54
+MLOps 52
+Data Annotation 48
+Synthetic Data 46
+Feature Engineering 50
+Model Evaluation 52
+NumPy 50
+Pandas 46
+scikit-learn 54
+AWS 48
+Docker 46
+REST APIs 44
+Git 42
+Testing 44
+Automation 48
+Problem Solving 72

@@ -59,27 +59,7 @@
 
 		<section class="section skills-section" id="skills" data-page-name="Skills">
 			<div class="section-inner skills-layout">
-				<div class="skills-copy">
-					<p class="section-kicker">Skills</p>
-					<h2>A rounded cloud of practical tools.</h2>
-					<p>A calm orbit of the tools and habits I use to turn complex ideas into useful systems.</p>
-				</div>
-				<div class="skills-cloud" data-skill-cloud aria-label="Interactive 3D skills word cloud" role="img">
-					<ul class="cloud-fallback" aria-label="Skills">
-						<li>Problem Solving</li>
-						<li>Python</li>
-						<li>Machine Learning</li>
-						<li>Cloud</li>
-						<li>AWS</li>
-						<li>REST APIs</li>
-						<li>JavaScript</li>
-						<li>Web Experiences</li>
-						<li>Data</li>
-						<li>Security</li>
-						<li>Automation</li>
-						<li>Testing</li>
-					</ul>
-				</div>
+				<div class="skills-cloud" data-skill-cloud aria-label="Interactive 3D skills word cloud" role="img"></div>
 			</div>
 		</section>
 
@@ -145,50 +125,60 @@
 	<script type="module">
 		import * as THREE from "https://unpkg.com/three@0.165.0/build/three.module.js";
 
-		const skillWords = [
-			{ text: "Problem Solving", weight: 1 },
-			{ text: "Python", weight: 0.95 },
-			{ text: "Machine Learning", weight: 0.92 },
-			{ text: "Cloud", weight: 0.86 },
-			{ text: "AWS", weight: 0.72 },
-			{ text: "REST APIs", weight: 0.7 },
-			{ text: "JavaScript", weight: 0.68 },
-			{ text: "Web Experiences", weight: 0.66 },
-			{ text: "Data", weight: 0.62 },
-			{ text: "Security", weight: 0.58 },
-			{ text: "Automation", weight: 0.56 },
-			{ text: "Testing", weight: 0.52 },
-			{ text: "Git", weight: 0.48 },
-			{ text: "SQL", weight: 0.46 },
-			{ text: "UX", weight: 0.44 },
-			{ text: "APIs", weight: 0.42 },
-			{ text: "Debugging", weight: 0.4 },
-			{ text: "Design", weight: 0.38 }
-		];
-
+		const skillsPath = "assets/skills.txt";
 		const cloudElement = document.querySelector("[data-skill-cloud]");
 
 		const nextPowerOfTwo = (value) => 2 ** Math.ceil(Math.log2(value));
 
+		const parseSkillLine = (line) => {
+			const trimmed = line.trim();
+
+			if (!trimmed || trimmed.startsWith("#")) {
+				return null;
+			}
+
+			const match = trimmed.match(/^(.*?)\s+(\d+(?:\.\d+)?)$/);
+
+			if (!match) {
+				return null;
+			}
+
+			return {
+				text: match[1].trim(),
+				size: THREE.MathUtils.clamp(Number(match[2]), 24, 82)
+			};
+		};
+
+		const loadSkillWords = async () => {
+			const response = await fetch(skillsPath, { cache: "no-cache" });
+
+			if (!response.ok) {
+				throw new Error(`Unable to load ${skillsPath}`);
+			}
+
+			const text = await response.text();
+			return text.split(/\r?\n/).map(parseSkillLine).filter(Boolean);
+		};
+
 		const makeTextSprite = (word, index) => {
 			const canvas = document.createElement("canvas");
 			const context = canvas.getContext("2d");
-			const fontSize = Math.round(34 + word.weight * 26);
-			const fontFamily = 'Inter, "Segoe UI", Arial, sans-serif';
+			const fontSize = word.size;
+			const fontFamily = 'Aptos, Inter, "Segoe UI", ui-sans-serif, sans-serif';
 
-			context.font = `800 ${fontSize}px ${fontFamily}`;
+			context.font = `650 ${fontSize}px ${fontFamily}`;
 			const metrics = context.measureText(word.text);
 			canvas.width = nextPowerOfTwo(metrics.width + fontSize * 1.2);
 			canvas.height = nextPowerOfTwo(fontSize * 1.9);
 
 			context.clearRect(0, 0, canvas.width, canvas.height);
-			context.font = `800 ${fontSize}px ${fontFamily}`;
+			context.font = `650 ${fontSize}px ${fontFamily}`;
 			context.textAlign = "center";
 			context.textBaseline = "middle";
-			context.shadowColor = "rgba(10, 26, 22, 0.55)";
-			context.shadowBlur = 18;
-			context.shadowOffsetY = 6;
-			context.fillStyle = index % 3 === 0 ? "#f3b8a5" : index % 3 === 1 ? "#d7f5e2" : "#f7fbf8";
+			context.shadowColor = "rgba(7, 22, 18, 0.42)";
+			context.shadowBlur = 14;
+			context.shadowOffsetY = 4;
+			context.fillStyle = ["#eefbf3", "#ccebd8", "#f1cfc3", "#d9ece8"][index % 4];
 			context.fillText(word.text, canvas.width / 2, canvas.height / 2);
 
 			const texture = new THREE.CanvasTexture(canvas);
@@ -203,7 +193,7 @@
 			});
 
 			const sprite = new THREE.Sprite(material);
-			const baseHeight = 18 + word.weight * 16;
+			const baseHeight = fontSize * 0.52;
 			const aspect = canvas.width / canvas.height;
 			sprite.scale.set(baseHeight * aspect, baseHeight, 1);
 			sprite.userData.baseHeight = baseHeight;
@@ -211,12 +201,18 @@
 			return sprite;
 		};
 
-		const initSkillCloud = (element) => {
+		const initSkillCloud = async (element) => {
 			if (!element) {
 				return;
 			}
 
 			try {
+				const skillWords = await loadSkillWords();
+
+				if (!skillWords.length) {
+					return;
+				}
+
 				const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 				const scene = new THREE.Scene();
 				const camera = new THREE.PerspectiveCamera(42, 1, 1, 1000);
