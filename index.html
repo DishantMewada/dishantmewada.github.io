@@ -245,9 +245,12 @@
 					const bounds = element.getBoundingClientRect();
 					const width = Math.max(260, Math.floor(bounds.width));
 					const height = Math.max(260, Math.floor(bounds.height));
+					const cloudScale = width < 420 ? 0.72 : width < 560 ? 0.8 : width < 820 ? 0.92 : 1;
+
 					renderer.setSize(width, height, false);
+					group.scale.setScalar(cloudScale);
 					camera.aspect = width / height;
-					camera.position.z = width < 560 ? 500 : 430;
+					camera.position.z = width < 420 ? 610 : width < 560 ? 560 : width < 820 ? 470 : 430;
 					camera.updateProjectionMatrix();
 				};
 
