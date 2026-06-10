@@ -107,6 +107,15 @@
 		<p>&copy; Dishant Mewada</p>
 	</footer>
 
+	<div class="side-arrows" aria-label="Page navigation">
+		<button class="side-arrow side-arrow-left" type="button" data-side-direction="left" aria-label="Previous page">
+			<span aria-hidden="true"></span>
+		</button>
+		<button class="side-arrow side-arrow-right" type="button" data-side-direction="right" aria-label="Next page">
+			<span aria-hidden="true"></span>
+		</button>
+	</div>
+
 	<script type="module">
 		import * as THREE from "https://unpkg.com/three@0.165.0/build/three.module.js";
 
@@ -387,6 +396,7 @@
 			}));
 			const anchorLinks = Array.from(document.querySelectorAll('a[href^="#"]'));
 			const navLinks = Array.from(document.querySelectorAll('.site-nav a[href^="#"]'));
+			const sideArrows = Array.from(document.querySelectorAll('[data-side-direction]'));
 			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 			const transitionDuration = reducedMotion ? 0 : 680;
 			let currentIndex = Math.max(0, pages.findIndex((page) => `#${page.id}` === window.location.hash));
@@ -417,6 +427,7 @@
 				currentIndex = index;
 				pages[currentIndex].element.classList.add('page-active');
 				updateNavState();
+				updateSideArrows();
 
 				if (updateUrl) {
 					const hash = pages[currentIndex].id === 'top' ? window.location.pathname : `#${pages[currentIndex].id}`;
@@ -435,6 +446,23 @@
 						link.setAttribute('aria-current', 'page');
 					} else {
 						link.removeAttribute('aria-current');
+					}
+				});
+			};
+
+			const updateSideArrows = () => {
+				sideArrows.forEach((button) => {
+					const targetPage = pages[destinationIndex(button.dataset.sideDirection)];
+
+					button.disabled = !targetPage;
+					button.classList.toggle('is-disabled', !targetPage);
+
+					if (targetPage) {
+						button.removeAttribute('aria-hidden');
+						button.setAttribute('aria-label', `Go to ${targetPage.name}`);
+					} else {
+						button.setAttribute('aria-hidden', 'true');
+						button.setAttribute('aria-label', 'No page in this direction');
 					}
 				});
 			};
@@ -490,6 +518,7 @@
 					currentIndex = targetIndex;
 					isNavigating = false;
 					updateNavState();
+					updateSideArrows();
 					const hash = targetPage.id === 'top' ? window.location.pathname : `#${targetPage.id}`;
 					window.history.replaceState(null, '', hash);
 				}, transitionDuration);
@@ -498,6 +527,14 @@
 			const goTo = (direction) => {
 				goToIndex(destinationIndex(direction), direction);
 			};
+
+			sideArrows.forEach((button) => {
+				button.addEventListener('click', () => {
+					if (!button.disabled) {
+						goTo(button.dataset.sideDirection);
+					}
+				});
+			});
 
 			anchorLinks.forEach((link) => {
 				link.addEventListener('click', (event) => {

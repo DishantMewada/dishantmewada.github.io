@@ -570,6 +570,103 @@ h3 {
 	margin: 0;
 }
 
+.side-arrows {
+	inset: 0;
+	pointer-events: none;
+	position: fixed;
+	z-index: 24;
+}
+
+.side-arrow {
+	--arrow-wash: rgba(127, 168, 152, 0.2);
+	align-items: center;
+	background:
+		radial-gradient(circle at center, rgba(247, 251, 248, 0.2), rgba(127, 168, 152, 0.08) 58%, transparent 72%);
+	border: 0;
+	border-radius: 999px;
+	color: rgba(47, 117, 109, 0.44);
+	cursor: pointer;
+	display: flex;
+	height: clamp(5rem, 15vh, 8.25rem);
+	justify-content: center;
+	opacity: 0.5;
+	padding: 0;
+	pointer-events: auto;
+	position: fixed;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: opacity 0.22s ease, transform 0.22s ease, color 0.22s ease;
+	width: clamp(2.6rem, 4.5vw, 3.85rem);
+}
+
+.side-arrow::before {
+	content: "";
+	inset: -1.9rem -0.35rem;
+	opacity: 0.34;
+	pointer-events: none;
+	position: absolute;
+	transition: opacity 0.22s ease;
+}
+
+.side-arrow span {
+	border-bottom: 2px solid currentColor;
+	display: block;
+	height: clamp(0.76rem, 1.4vw, 1rem);
+	position: relative;
+	width: clamp(0.76rem, 1.4vw, 1rem);
+	z-index: 1;
+}
+
+.side-arrow-left {
+	left: 0;
+}
+
+.side-arrow-left::before {
+	background: linear-gradient(90deg, var(--arrow-wash), transparent 72%);
+}
+
+.side-arrow-left span {
+	border-left: 2px solid currentColor;
+	transform: rotate(45deg) translate(0.08rem, -0.08rem);
+}
+
+.side-arrow-right {
+	right: 0;
+}
+
+.side-arrow-right::before {
+	background: linear-gradient(270deg, var(--arrow-wash), transparent 72%);
+}
+
+.side-arrow-right span {
+	border-right: 2px solid currentColor;
+	transform: rotate(-45deg) translate(-0.08rem, -0.08rem);
+}
+
+.side-arrow:hover,
+.side-arrow:focus-visible {
+	color: rgba(47, 117, 109, 0.68);
+	opacity: 0.78;
+	transform: translateY(-50%) scale(1.04);
+}
+
+.side-arrow:hover::before,
+.side-arrow:focus-visible::before {
+	opacity: 0.58;
+}
+
+.side-arrow:focus-visible {
+	outline: 1px solid rgba(127, 168, 152, 0.34);
+	outline-offset: -0.45rem;
+}
+
+.side-arrow.is-disabled,
+.side-arrow:disabled {
+	cursor: default;
+	opacity: 0;
+	pointer-events: none;
+}
+
 @media (max-width: 920px) {
 	.project-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -624,8 +721,15 @@ h3 {
 
 	.hero,
 	.section {
-		padding-left: 1.15rem;
-		padding-right: 1.15rem;
+		padding-left: 1.55rem;
+		padding-right: 1.55rem;
+	}
+
+	.side-arrow {
+		color: rgba(47, 117, 109, 0.36);
+		height: 4.6rem;
+		opacity: 0.42;
+		width: 2.45rem;
 	}
 
 	.hero-copy {
