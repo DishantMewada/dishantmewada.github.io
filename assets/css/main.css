@@ -429,11 +429,7 @@ h3 {
 .project-grid {
 	display: grid;
 	gap: 1.15rem;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.placeholder-grid {
-	grid-template-columns: minmax(0, 640px);
+	grid-template-columns: minmax(0, 940px);
 }
 
 .project-card {
@@ -441,6 +437,8 @@ h3 {
 	border: 1px solid var(--line);
 	border-radius: 8px;
 	box-shadow: 0 12px 30px rgba(39, 66, 61, 0.07);
+	display: grid;
+	grid-template-columns: minmax(17rem, 0.95fr) minmax(0, 1fr);
 	overflow: hidden;
 	transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
 }
@@ -452,13 +450,44 @@ h3 {
 	transform: translateY(-3px);
 }
 
-.placeholder-card {
-	display: grid;
-	grid-template-columns: minmax(12rem, 0.65fr) minmax(0, 1fr);
+.project-visual {
+	background:
+		linear-gradient(135deg, rgba(127, 168, 152, 0.16), rgba(232, 241, 247, 0.66)),
+		var(--mist);
+	display: block;
+	min-height: 18rem;
+	overflow: hidden;
+	position: relative;
+}
+
+.project-visual::after {
+	background: linear-gradient(180deg, transparent 58%, rgba(18, 32, 29, 0.18));
+	content: "";
+	inset: 0;
+	pointer-events: none;
+	position: absolute;
+}
+
+.project-visual img {
+	height: 100%;
+	object-fit: cover;
+	object-position: left center;
+	transition: transform 0.28s ease;
+	width: 100%;
+}
+
+.project-card:hover .project-visual img,
+.project-card:focus-within .project-visual img {
+	transform: scale(1.025);
 }
 
 .project-body {
-	padding: 1.2rem;
+	padding: clamp(1.2rem, 3vw, 1.85rem);
+}
+
+.project-body h3 a:hover,
+.project-body h3 a:focus-visible {
+	color: var(--teal);
 }
 
 .project-body p {
@@ -466,31 +495,29 @@ h3 {
 	margin-bottom: 0;
 }
 
-.placeholder-visual {
-	align-items: center;
-	background:
-		linear-gradient(135deg, rgba(127, 168, 152, 0.28), rgba(232, 241, 247, 0.8)),
-		var(--mist);
+.project-meta {
 	display: flex;
-	min-height: 100%;
-	padding: 2rem;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	margin-top: 1.1rem;
 }
 
-.placeholder-visual span {
-	aspect-ratio: 1;
-	background:
-		radial-gradient(circle at 35% 35%, #ffffff 0 16%, transparent 17%),
-		linear-gradient(135deg, var(--sage), var(--teal));
-	border-radius: 50%;
-	box-shadow: 0 18px 50px rgba(39, 66, 61, 0.14);
-	display: block;
-	transition: transform 0.28s ease;
-	width: min(9rem, 60%);
+.project-meta span {
+	background: rgba(127, 168, 152, 0.12);
+	border: 1px solid rgba(127, 168, 152, 0.2);
+	border-radius: 999px;
+	color: var(--teal);
+	font-size: 0.74rem;
+	font-weight: 750;
+	letter-spacing: 0.03em;
+	padding: 0.3rem 0.55rem;
 }
 
-.project-card:hover .placeholder-visual span,
-.project-card:focus-within .placeholder-visual span {
-	transform: scale(1.05);
+.project-link {
+	color: var(--teal);
+	display: inline-flex;
+	font-weight: 800;
+	margin-top: 1.1rem;
 }
 
 .contact-section {
@@ -788,11 +815,11 @@ h3 {
 		grid-template-columns: 1fr;
 	}
 
-	.placeholder-card {
+	.project-card {
 		grid-template-columns: 1fr;
 	}
 
-	.placeholder-visual {
+	.project-visual {
 		min-height: 12rem;
 	}
 
