@@ -122,9 +122,11 @@ a:hover {
 	opacity: 0;
 	overflow-x: hidden;
 	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: contain;
 	pointer-events: none;
 	position: fixed;
-	touch-action: none;
+	touch-action: pan-y;
 	transform:
 		translate3d(var(--slide-x, 0), var(--slide-y, 0), 0)
 		rotate(var(--slide-rotate, 0deg))
@@ -349,11 +351,9 @@ h3 {
 	background: linear-gradient(135deg, #d6e1da 0%, #e2e7df 52%, #ccd8df 100%);
 }
 
-.about-grid,
-.contact-grid {
-	display: grid;
-	gap: clamp(2rem, 5vw, 5rem);
-	grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+.about-layout,
+.contact-layout {
+	width: min(100%, 760px);
 }
 
 .about-copy {
@@ -423,11 +423,6 @@ h3 {
 
 .projects-section::after {
 	opacity: 0.16;
-}
-
-.section-heading {
-	margin-bottom: clamp(2rem, 5vw, 3.5rem);
-	max-width: 720px;
 }
 
 .project-grid {
@@ -548,12 +543,8 @@ h3 {
 	color: #f7fbf8;
 }
 
-.contact-section .section-kicker {
-	color: #f1ad9c;
-}
-
-.contact-grid {
-	align-items: start;
+.contact-layout {
+	width: min(100%, 720px);
 }
 
 .contact-links {
@@ -699,11 +690,6 @@ h3 {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.about-grid,
-	.contact-grid {
-		grid-template-columns: 1fr;
-	}
-
 	.skills-cloud {
 		height: clamp(24rem, 62vh, 38rem);
 	}
@@ -803,10 +789,6 @@ h3 {
 		width: 100%;
 	}
 
-	.projects-section .section-heading {
-		margin-bottom: 1.35rem;
-	}
-
 	.skills-cloud {
 		height: min(31rem, 64vh);
 		min-height: 21rem;
@@ -814,20 +796,6 @@ h3 {
 
 	.about-section .section-inner {
 		width: 100%;
-	}
-
-	.about-grid {
-		gap: 1.2rem;
-	}
-
-	.about-section .section-kicker {
-		margin-bottom: 0.55rem;
-	}
-
-	.about-section h2 {
-		font-size: clamp(1.55rem, 7.2vw, 1.9rem);
-		line-height: 1.12;
-		margin-bottom: 0;
 	}
 
 	h1 {
@@ -886,19 +854,6 @@ h3 {
 		padding-top: 6.8rem;
 	}
 
-	.projects-section .section-heading {
-		margin-bottom: 1rem;
-	}
-
-	.projects-section h2 {
-		font-size: 1.55rem;
-		line-height: 1.15;
-	}
-
-	.about-grid {
-		gap: 0.95rem;
-	}
-
 	.about-copy {
 		font-size: 0.9rem;
 		line-height: 1.5;
@@ -906,10 +861,6 @@ h3 {
 
 	.about-copy p {
 		margin-bottom: 0.7rem;
-	}
-
-	.about-section h2 {
-		font-size: 1.5rem;
 	}
 
 	.skill-list {
