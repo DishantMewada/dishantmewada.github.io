@@ -417,6 +417,10 @@ h3 {
 	background: var(--paper);
 }
 
+.projects-section .section-inner {
+	padding-top: 0.35rem;
+}
+
 .projects-section::after {
 	opacity: 0.16;
 }
@@ -789,6 +793,20 @@ h3 {
 		padding-top: 6.9rem;
 	}
 
+	.projects-section {
+		align-items: flex-start;
+		padding-top: 7.2rem;
+	}
+
+	.projects-section .section-inner {
+		padding-top: 0;
+		width: 100%;
+	}
+
+	.projects-section .section-heading {
+		margin-bottom: 1.35rem;
+	}
+
 	.skills-cloud {
 		height: min(31rem, 64vh);
 		min-height: 21rem;
@@ -862,6 +880,19 @@ h3 {
 	.about-section {
 		padding-bottom: 1.45rem;
 		padding-top: 6.75rem;
+	}
+
+	.projects-section {
+		padding-top: 6.8rem;
+	}
+
+	.projects-section .section-heading {
+		margin-bottom: 1rem;
+	}
+
+	.projects-section h2 {
+		font-size: 1.55rem;
+		line-height: 1.15;
 	}
 
 	.about-grid {
