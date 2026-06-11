@@ -476,6 +476,25 @@ h3 {
 	width: 100%;
 }
 
+.project-placeholder {
+	align-items: center;
+	background:
+		linear-gradient(135deg, rgba(226, 239, 232, 0.92), rgba(246, 240, 231, 0.88)),
+		var(--mist);
+	color: rgba(47, 78, 70, 0.68);
+	display: flex;
+	justify-content: center;
+}
+
+.project-placeholder span {
+	border-bottom: 1px solid rgba(47, 78, 70, 0.18);
+	border-top: 1px solid rgba(47, 78, 70, 0.18);
+	font-size: 0.86rem;
+	font-weight: 800;
+	padding: 0.65rem 0.85rem;
+	text-transform: uppercase;
+}
+
 .project-card:hover .project-visual img,
 .project-card:focus-within .project-visual img {
 	transform: scale(1.025);
